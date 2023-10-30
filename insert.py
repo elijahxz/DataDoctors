@@ -34,9 +34,9 @@ mycursor = mydb.cursor()
 
 file = open("insert.py", "r")
 
-for line in file: 
-    if line.search
-exit(1)
+#for line in file: 
+#    if line.search
+#exit(1)
 
 sql = "Insert into hospital (Id, Address, City, Zip_code, State, Phone) VALUES (%s, %s, %s, %s, %s, %s)"
 val = ("1", "test", "test", "37055", "TN", "6155985590")
