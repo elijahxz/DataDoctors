@@ -1,0 +1,7 @@
+HOSPITAL
+ID, Address, City, Zip_code, State, Phone
+1, 1301 E Main St, Murfreesboro, 37032, TN, 1235433333
+
+EMPLOYEE
+Emp_id, Start_date, Pay
+00000001, 2023-11-01, 10000.00

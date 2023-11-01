@@ -32,16 +32,61 @@ mydb = connect_to_database(sys.argv[1], sys.argv[2], sys.argv[3])
 # Setup a cursor
 mycursor = mydb.cursor()
 
-file = open("insert.py", "r")
+file = open("insert.txt", "r")
 
-#for line in file: 
-#    if line.search
-#exit(1)
+found_table = False;
+table_name = ""
+table_columns = ""
+sql = "Insert into %s (%s) VALUES ("
 
-sql = "Insert into hospital (Id, Address, City, Zip_code, State, Phone) VALUES (%s, %s, %s, %s, %s, %s)"
-val = ("1", "test", "test", "37055", "TN", "6155985590")
+for line in file:
+    # Check if a table was found, if a new one is found, next line is columns
+    if found_table:
+        # Reset the column string
+        table_columns = ""
 
-mycursor.execute(sql, val)
+        # Split the list of columns
+        tables = line.split(',')
 
+        # Iterate through the list, adding them to the col string
+        for i in range(len(tables)):
+            if (i + 1 == len(tables)):
+                table_columns += tables[i].strip()
+            else: 
+                table_columns += tables[i].strip() + ','
+        
+        # Reset the flag and skip the statements below
+        found_table = False
+        continue
+
+    # No commas found? Either a new line or a new table.
+    if line.find(',') < 0: 
+        if line == "\n":
+            continue
+        else:
+            table_name = line.strip()
+            found_table = True
+    # If we are here, the line should be values to insert into the table
+    else: 
+        row = line.split(",")
+        value_placeholder = "%s"
+
+        # Strip the elements, and add placeholders for sql string
+        for element in range(len(row)): 
+            row[element] = row[element].strip()
+            if element != 0:
+                value_placeholder += ", %s"
+
+        # Convert the row values to a tuple
+        values = tuple(row)
+        
+        # Set up the sql statement
+        sql_statement = sql % (table_name, table_columns)
+        sql_statement += value_placeholder + ")"
+        print(sql_statement)
+        print(values)
+
+        # Execute the statement
+        mycursor.execute(sql_statement, values)
 
 mydb.commit()
