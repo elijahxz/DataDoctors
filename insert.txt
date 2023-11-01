@@ -33,9 +33,14 @@ Ssn, Fname, Lname, Phone, Dob, Email, Email_ext, Address, City, State, Zip_code
 999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed, yahoo, 822 Humminbird Ln, Murfreesboro, TN, 37055
 
 APPOINTMENTS
+App_id, Date_time, Symptoms, Pssn, Emp_id, Department
+00000001, 2023-11-01 13:30:00, Broken Leg, 999887777, 00000002, 2
 
 PATIENTQUEUE
+App_id, Check_in
 
 MEDICALHISTORY
+Pssn, Allergies, Surgeries
 
 BILLING
+Tran_id, Pss, Paid

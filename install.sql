@@ -1,3 +1,4 @@
+Use datadoctors;
 CREATE TABLE HOSPITAL
 (
 	Id		 	INT				NOT NULL, 
@@ -61,8 +62,9 @@ CREATE TABLE PATIENT
 	Dob			DATE			NOT NULL,
 	Email		VARCHAR(60)		NOT NULL,
 	Email_ext	VARCHAR(30)		NOT NULL,
-	Adress		VARCHAR(60)		NOT NULL,
+	Address		VARCHAR(60)		NOT NULL,
 	City		VARCHAR(30)		NOT NULL,
+	State		CHAR(2)			NOT NULL,
 	Zip_code	INT				NOT NULL,
 	PRIMARY KEY(Ssn)
 );
