@@ -4,4 +4,38 @@ ID, Address, City, Zip_code, State, Phone
 
 EMPLOYEE
 Emp_id, Start_date, Pay
-00000001, 2023-11-01, 10000.00
+00000001, 2002-11-01, 781212.52
+00000002, 2003-01-01, 250122.30
+00000003, 2003-01-01, 100200.34
+00000004, 2003-01-01, 32134.55
+
+DEPARTMENT
+Dnum, Dname
+1, Administration
+2, Emergency Care
+3, Cleanup Crew
+
+DOCTOR
+Ssn, Emp_id, Department, Fname, Lname
+919084444, 00000002, 2, Hailey, Fortrest
+
+NURSES
+Ssn, Emp_id, Department, Fname, Lname
+123323333, 00000003, 2, Adam, Argon
+
+STAFF
+Ssn, Emp_id, Department, Fname, Lname
+123121234, 00000001, 1, Sarwin, Founder
+000120000, 00000004, 3, Neftin, Corbyn
+
+PATIENT
+Ssn, Fname, Lname, Phone, Dob, Email, Email_ext, Address, City, State, Zip_code
+999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed, yahoo, 822 Humminbird Ln, Murfreesboro, TN, 37055
+
+APPOINTMENTS
+
+PATIENTQUEUE
+
+MEDICALHISTORY
+
+BILLING
