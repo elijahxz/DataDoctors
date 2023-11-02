@@ -13,9 +13,9 @@ def connect_to_database(user, password, database):
     try:
         mydb = mysql.connector.connect(
             host = 'localhost',
-            user = 'root',
+            user = user,
             password = password,
-            database = 'datadoctors'
+            database = database
         )
     except Exception:
         print("Error: Connection to the database has failed") 
