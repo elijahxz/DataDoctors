@@ -1,11 +1,11 @@
 ﻿Authors: 
 Elijah, Jonathan, Michael, Wasim
 
-Note: For insert.py you must install mysql-connector-python (pip install mysql-connector-python)
+Note: For insert.py you **must install mysql-connector-python** (pip install mysql-connector-python)
 
 Instructions:
 1. Download XAMPP from the web: https://www.apachefriends.org/download.html
-    Install version 8.2.4
+    Install **version 8.2.4**
     If you already have mysql workbench installed, you will have to the following steps:
    	Open XAMPP Control Panel
    	On the MySQL row, Click Config -> my.ini
