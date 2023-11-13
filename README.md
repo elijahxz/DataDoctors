@@ -5,18 +5,26 @@ Note: For insert.py you **must install mysql-connector-python** (pip install mys
 
 Instructions:
 1. Download XAMPP from the web: https://www.apachefriends.org/download.html
-    Install **version 8.2.4**
-    If you already have mysql workbench installed, you will have to the following steps:
+
+   Install **version 8.2.4**
+
+   If you already have mysql workbench installed, you will have to the following steps:
+
    	Open XAMPP Control Panel
+
    	On the MySQL row, Click Config -> my.ini
-       		Change the port from 3306 to 3308 and save the file
+
+   		Change the port from 3306 to 3308 and save the file
+
    	Go to C://xampp/myPhpAdmin/config.inc.php (or whereever you installed xampp)
-       		Open the file and add :3308 to the variable "$cfg['Servers'][$i]['host']"
-       		Afterwords, it should look like $cfg['Servers'][$i]['host'] = '127.0.0.1:3308';
+
+   		Open the file and add :3308 to the variable "$cfg['Servers'][$i]['host']"
+
+   		Afterwords, it should look like $cfg['Servers'][$i]['host'] = '127.0.0.1:3308';
 
    The reason you have to do this is because a default MySql connection uses the port 3306, so XAMPP's connection must use a different port
 
-2. Connect the XAMPP database instance to mysql workbench:
+3. Connect the XAMPP database instance to mysql workbench:
     Have apache and mysql running on xampp, open mysql and hit the + by MySQL Connections
     Set a connection name (ie: xamppserver)
     Go to the xampp control panel and find the mysql port number
