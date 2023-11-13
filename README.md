@@ -25,11 +25,16 @@ Instructions:
    The reason you have to do this is because a default MySql connection uses the port 3306, so XAMPP's connection must use a different port
 
 3. Connect the XAMPP database instance to mysql workbench:
-    Have apache and mysql running on xampp, open mysql and hit the + by MySQL Connections
-    Set a connection name (ie: xamppserver)
-    Go to the xampp control panel and find the mysql port number
-    Insert that number into the Port input on the mysql workbench
-    Click Test Connection, then click OK
+
+   Have apache and mysql running on xampp, open mysql and hit the + by MySQL Connections
+
+   Set a connection name (ie: xamppserver)
+
+   Go to the xampp control panel and find the mysql port number
+
+   Insert that number into the Port input on the mysql workbench
+
+   Click Test Connection, then click OK
 
     Open the new connection you just created, then create a database called DataDoctors
     Steps:
