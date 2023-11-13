@@ -43,9 +43,12 @@ Instructions:
 	3. In your terminal, run "python insert.py port username password datadoctors"
 		
   		Note: The default xampp password is nothing, so pass in ""
-		      your username is usually root.
-		      your port number can be found on the xampp control panel
-                      ie: python insert.py 3308 root "" datadoctors
+
+    		      	your username is usually root.
+
+    			your port number can be found on the xampp control panel
+
+    			ie: python insert.py 3308 root "" datadoctors
 
     After running these steps, datadoctors should be filled with tables and entries in the tables.
 
