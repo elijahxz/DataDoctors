@@ -50,6 +50,8 @@ Instructions:
     To truncate the tables in datadoctors, run truncate.sql in SQL Workbench
 
 To get this repository to show up on xampp, do the following:
+    
     Go to C://xampp/htdocs and clone this repository in that folder
+    
     Open http://127.0.0.1/DataDoctors
     
