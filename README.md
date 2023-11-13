@@ -28,8 +28,10 @@ Instructions:
 	1. Open MySQL and create a database called datadoctors (CREATE DATABASE datadoctors;)
 	2. Open install.sql and run it inside of MySql
 	3. In your terminal, run "python insert.py port username password datadoctors"
-		Note: your username is usually root.
-		      your port number can be found on the xampp control panel 
+		Note: The default xampp password is nothing, so pass in ""
+		      your username is usually root.
+		      your port number can be found on the xampp control panel
+                      ie: python insert.py 3308 root "" datadoctors
 
     After running these steps, datadoctors should be filled with tables and entries in the tables.
 
