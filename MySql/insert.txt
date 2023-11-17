@@ -1,46 +1,65 @@
 HOSPITAL
-ID, Address, City, Zip_code, State, Phone
+Id, Address, City, Zip_code, State, Phone
 1, 1301 E Main St, Murfreesboro, 37032, TN, 1235433333
-
-EMPLOYEE
-Emp_id, Start_date, Pay
-00000001, 2002-11-01, 781212.52
-00000002, 2003-01-01, 250122.30
-00000003, 2003-01-01, 100200.34
-00000004, 2003-01-01, 32134.55
+2, 742 Oak St, Nashville, 37211, TN, 6155551212
+3, 500 Maple Ave, Franklin, 37064, TN, 6155559876
+4, 123 Pine St, Brentwood, 37027, TN, 6155555555
 
 DEPARTMENT
 Dnum, Dname
 1, Administration
 2, Emergency Care
 3, Cleanup Crew
+4, Pediatrics
+5, Radiology
+6, Cardiology
 
-DOCTOR
-Ssn, Emp_id, Department, Fname, Lname
-919084444, 00000002, 2, Hailey, Fortrest
-
-NURSES
-Ssn, Emp_id, Department, Fname, Lname
-123323333, 00000003, 2, Adam, Argon
-
-STAFF
-Ssn, Emp_id, Department, Fname, Lname
-123121234, 00000001, 1, Sarwin, Founder
-000120000, 00000004, 3, Neftin, Corbyn
+EMPLOYEE
+Emp_id, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay
+00000001, John, Smith, 543219876, Doctor, 1, 2002-11-01, 150212.52
+00000002, Sarah, Jones, 123456789, Nurse, 1, 2005-04-04, 70567.34
+00000003, Michael, Brown, 987654321, Janitor, 3, 2010-08-15, 40000.00
+00000004, Emily, Davis, 654321987, Nurse, 4, 2015-02-22, 60000.00
+00000005, Robert, Taylor, 456789012, Doctor, 6, 2018-07-10, 180000.00
+00000006, Olivia, Wilson, 789012345, Nurse, 4, 2020-01-05, 75000.00
+00000007, Ethan, Martin, 567890123, Doctor, 5, 2022-04-30, 160000.00
 
 PATIENT
-Ssn, Fname, Lname, Phone, Dob, Email, Email_ext, Address, City, State, Zip_code
-999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed, yahoo, 822 Humminbird Ln, Murfreesboro, TN, 37055
+Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
+999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed, 822 Hummingbird Ln, Murfreesboro, TN, 37055
+888776666, Emily, White, 6159998888, 1995-12-15, emily.white@email.com, 456 Redwood St, Nashville, TN, 37209
+777665555, James, Black, 6157771234, 1980-06-22, james.black@email.com, 789 Birch Ave, Franklin, TN, 37064
+666554444, Sophia, Green, 6154445678, 1992-09-05, sophia.green@email.com, 123 Elm St, Brentwood, TN, 37027
+555443333, Liam, Blue, 6153339876, 1975-02-28, liam.blue@email.com, 987 Pine Ln, Murfreesboro, TN, 37032
 
 APPOINTMENTS
 App_id, Date_time, Symptoms, Pssn, Emp_id, Department
 00000001, 2023-11-01 13:30:00, Broken Leg, 999887777, 00000002, 2
+00000002, 2023-11-02 09:45:00, Fever, 888776666, 00000004, 4
+00000003, 2023-11-03 14:15:00, Chest Pain, 777665555, 00000007, 5
+00000004, 2023-11-04 10:30:00, Headache, 666554444, 00000005, 6
+00000005, 2023-11-05 11:00:00, Sore Throat, 555443333, 00000006, 3
 
 PATIENTQUEUE
-App_id, Check_in
+Pssn, App_id, Check_in
+999887777, 00000001, 2023-11-01 13:20:00
+888776666, 00000002, 2023-11-02 09:40:00
+777665555, 00000003, 2023-11-03 14:10:00
+666554444, 00000004, 2023-11-04 10:25:00
+555443333, 00000005, 2023-11-05 10:50:00
 
 MEDICALHISTORY
 Pssn, Allergies, Surgeries
+999887777, None, None
+888776666, Penicillin, Appendectomy
+777665555, None, Knee Surgery
+666554444, Sulfa, Tonsillectomy
+555443333, None, Wisdom Teeth Removal
 
 BILLING
-Tran_id, Pss, Paid
+Tran_id, Pssn, Paid
+000001, 999887777, 0
+000002, 888776666, 1
+000003, 777665555, 0
+000004, 666554444, 0
+000005, 555443333, 1
