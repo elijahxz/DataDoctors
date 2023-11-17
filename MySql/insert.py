@@ -23,6 +23,15 @@ def connect_to_database(port, user, password, database):
         print("Error: Connection to the database has failed") 
         exit(1)
     return mydb
+
+# Fetch existing data from the database
+def fetch_existing_data():
+    try:
+        mycursor.execute(f"SELECT * FROM {table_name}")
+        return mycursor.fetchall()
+    except mysql.connector.Error as err:
+        print("Error fetching existing data:", err)
+        return []
     
 if len(sys.argv) != 5: 
     usage()
@@ -39,6 +48,7 @@ found_table = False;
 table_name = ""
 table_columns = ""
 sql = "Insert into %s (%s) VALUES ("
+existing_data = fetch_existing_data()
 
 for line in file:
     # Check if a table was found, if a new one is found, next line is columns
@@ -81,13 +91,14 @@ for line in file:
         # Convert the row values to a tuple
         values = tuple(row)
         
-        # Set up the sql statement
-        sql_statement = sql % (table_name, table_columns)
-        sql_statement += value_placeholder + ")"
-        print(sql_statement)
-        print(values)
+        if values not in existing_data:
+            # Set up the sql statement
+            sql_statement = sql % (table_name, table_columns)
+            sql_statement += value_placeholder + ")"
+            print(sql_statement)
+            print(values)
 
-        # Execute the statement
-        mycursor.execute(sql_statement, values)
+            # Execute the statement
+            mycursor.execute(sql_statement, values)
 
 mydb.commit()
