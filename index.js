@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $("#Dob, #Dob-c").datepicker();
+    //$("#Dob, #Dob-c").datepicker();
     // When we pull the Date of birth field, to parse/convert it to mysql, we will use this
     //$.datepicker.parseDate( "yy-mm-dd", "2007-01-26" );
 	$("#login-btn").on('click', function(e)
