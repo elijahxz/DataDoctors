@@ -18,7 +18,7 @@
     }
 
     // Checks if a patient exists in the patient table
-    function check_in($ssn, $dob)
+    function check_in($ssn, $dob, $appointment)
     {
         $results = [];
         $conn = OpenDb("3308");
@@ -33,10 +33,27 @@
 
         if($result -> num_rows == 1)
         { 
-            $results = $result -> fetch_assoc();  
-            
-            CloseDB($conn);
-            
+            array_push($results, $result -> fetch_assoc());  
+
+            if ($appointment == "true")
+            {
+                $stmt = $conn -> prepare("SELECT * FROM APPOINTMENTS " . 
+                                         "WHERE Pssn=? " . 
+                                            "AND Date_time >= DATE(NOW()) " .
+                                            "ORDER BY Date_time");
+                $stmt->bind_param("s", $appointment);
+
+                $stmt->execute();
+
+                $result = $stmt -> get_result();
+                
+                if($result -> num_rows != 1)
+                {
+                    CloseDB($conn);
+                    return false;
+                }
+                array_push($results, $result -> fetch_assoc());  
+            }
             return $results;
         }
        
@@ -64,7 +81,34 @@
         }
         return true;
     }
-    
+
+    // Queries for a patient based on their email.
+    function query_patient($email)
+    {
+        $results = [];
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT * FROM PATIENT WHERE Email=?");
+
+        $stmt->bind_param("s", $email);
+
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+
+        if($result -> num_rows == 1)
+        { 
+            $results = $result -> fetch_assoc();  
+            
+            CloseDB($conn);
+            
+            return $results;
+        } 
+        CloseDB($conn);
+        return false;
+    }
+
+
     // Start of global space
     if( !isset($_POST['functionname']) )
     {
@@ -77,13 +121,13 @@
             //    $aResult['result'] = DisplaySuppliers();
             //    break;
             case 'check_in':
-                if (check_arguments($_POST, 2) == True)
+                if (check_arguments($_POST, 3) == True)
                 {
-                    $aResult['result'] = check_in($_POST['arguments'][0], $_POST['arguments'][1]);
+                    $aResult['result'] = check_in($_POST['arguments'][0], $_POST['arguments'][1], $_POST['arguments'][2]);
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 2);
+                    $aResult['error'] = check_arguments($_POST, 3);
                 }
                 break;
             case 'create_patient':
@@ -94,7 +138,17 @@
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 2);
+                    $aResult['error'] = check_arguments($_POST, 10);
+                }
+                break;
+            case 'patient_portal':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = query_patient($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
             default:

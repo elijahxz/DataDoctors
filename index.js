@@ -122,6 +122,7 @@ $(document).ready(function()
 
     $("#check-in-btn").on('click', function(e){
         e.preventDefault();
+        var appointment = false;
         var items = [];
         var data = $("#previous-user-form").serializeArray();
         
@@ -134,9 +135,21 @@ $(document).ready(function()
                 alert("Invalid Social Security Number, please check it and try again");
                 return;
             }
+            if(data[i].name == "Appointment")
+            {
+                if (data[i].value == "Y")
+                {
+                    data[i].value = true;
+                    appointment = true;
+                }
+                else
+                {
+                    data[i].value = false;
+                }
+            }
             items.push(data[i].value); 
         }
-
+        
         jQuery.ajax({
             type: "POST",
             url: 'php/sql.php',
@@ -147,11 +160,19 @@ $(document).ready(function()
                             console.log(obj.result);
                             if(obj.result != false)
                             {
-                                createCookie(obj.result.Email, $(location).attr('href'));
+                                createCookie("user", obj.result[0].Email, $(location).attr('href'));
+                                if(appointment)
+                                {
+                                    createCookie("Appointment", obj.result[1].App_id, $(location).attr('href'));
+                                }
                                 window.location.href = ($(location).attr('href') + "PatientPortal");
                             }
                             else
                             {
+                                if (appointment)
+                                {
+                                    alert("Please make sure that you have an appointment, or select No");
+                                }
                                 $("#check-in-err").show();  
                             }
                         }
@@ -184,11 +205,11 @@ $(document).ready(function()
     }
     
     // Creates a cookie that lasts 5 minutes
-    function createCookie(value, path)
+    function createCookie(name, value, path)
     {
         var date = new Date();
         date.setTime(date.getTime()+(1*5*60*1000));
-        document.cookie = "user="+value+"; expires="+date.toGMTString()+"; path=" + path + "/PatientPortal;";
+        document.cookie = name+"="+value+"; expires="+date.toGMTString()+"; path=" + path + "/PatientPortal;";
     }
 
 
