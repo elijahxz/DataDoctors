@@ -5,7 +5,8 @@ $(document).ready(function()
     const ALPHANUMERIC_WSPACE = value => /^[0-9a-z ]+$/gi.test(value);
     // Used to check for numerics on input field
     const NUMERIC = value => /^[0-9\.]+$/gi.test(value);
-
+    
+    // Datepicker for the date of birth stuff
     $("#Dob, #Dob-c").datepicker({
         dateFormat: 'yy-mm-dd',
         maxDate: new Date,
@@ -14,9 +15,9 @@ $(document).ready(function()
         changeYear: true,
         yearRange: "1800:2023"
     });
-    // When we pull the Date of birth field, to parse/convert it to mysql, we will use this
-    //$.datepicker.parseDate( "yy-mm-dd", "2007-01-26" );
-	$("#login-btn").on('click', function(e)
+	
+    // For the staff login, redirect them to this page. 
+    $("#login-btn").on('click', function(e)
 	{
         window.location.href = ($(location).attr('href') + "StaffLogin");
     });
@@ -26,21 +27,19 @@ $(document).ready(function()
         $(".question").show();
     });
 
-    $('input[type="checkbox"]').on('change', function() {
-        $('input[type="checkbox"]').not(this).prop('checked', false);
-    });
-	
     $("#previous-user").on('click', function(e)
 	{
         $("#previous-user-holder").show();
         $("#new-user-holder").hide();
     });
+    
     $("#new-user").on('click', function(e)
 	{
         $("#new-user-holder").show();
         $("#previous-user-holder").hide();
     });
-
+    
+    // This attempts to create a new patient
     $("#create-user-btn").on('click', function(e){
         e.preventDefault();
         
@@ -87,6 +86,7 @@ $(document).ready(function()
             }
             items.push(data[i].value); 
         }
+        // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
             url: 'php/sql.php',
@@ -113,8 +113,6 @@ $(document).ready(function()
             console.log(jqXHR.responseText);
             return;
         });
-
-        console.log(data, items);
     });
 
     $("#check-in-btn").on('click', function(e){
@@ -133,6 +131,7 @@ $(document).ready(function()
             }
             items.push(data[i].value); 
         }
+
         jQuery.ajax({
             type: "POST",
             url: 'php/sql.php',
