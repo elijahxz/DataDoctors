@@ -20,6 +20,7 @@
     // Checks if a patient exists in the patient table
     function check_in($ssn, $dob)
     {
+        $results = [];
         $conn = OpenDb("3308");
         
         $stmt = $conn -> prepare("SELECT * FROM PATIENT WHERE Ssn=? AND Dob=?");
@@ -27,12 +28,16 @@
         $stmt->bind_param("ss", $ssn, $dob);
 
         $stmt->execute();
-        
-        $stmt->store_result(); 
-        if($stmt -> num_rows == 1)
+
+        $result = $stmt -> get_result();
+
+        if($result -> num_rows == 1)
         { 
+            $results = $result -> fetch_assoc();  
+            
             CloseDB($conn);
-            return True;
+            
+            return $results;
         }
        
         CloseDB($conn);

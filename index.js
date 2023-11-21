@@ -44,7 +44,7 @@ $(document).ready(function()
         e.preventDefault();
         
         var items = [];
-        var data = $("#new-user-form").serializeArray();i
+        var data = $("#new-user-form").serializeArray();
 
         for (var i = 0; i < data.length; i++)
         {
@@ -58,11 +58,13 @@ $(document).ready(function()
                 alert("Invalid Social Security Number, please check it and try again");
                 return;
             }
-            else if(data[i].name == "Email" && verifyEmail(data[i].value) == false)
+            else if(data[i].name == "Email")
             {
-                alert("Invalid Email, please check it and try again");
-                returnalert("Error: " + data[i].name + " is not alphanumeric! Please Try Again");
-                return;;
+                if (verifyEmail(data[i].value) == false)
+                {
+                    alert("Invalid Email, please check it and try again");
+                    return;
+                }
             }
             else if(data[i].name == "Zipcode" && NUMERIC(data[i].value) == false)
             {
@@ -86,6 +88,7 @@ $(document).ready(function()
             }
             items.push(data[i].value); 
         }
+        
         // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
@@ -97,11 +100,13 @@ $(document).ready(function()
                             console.log(obj.result);
                             if(obj.result)
                             {
-                                alert("success");
+                                // here we know items is 5, console.log the structure of items if there is an error.
+                                createCookie(items[5], $(location).attr('href'));
+                                window.location.href = ($(location).attr('href') + "PatientPortal");
                             }
                             else
                             {
-                                alert("failure");  
+                                alert("There was an error creating your account, please try again or contact administration.");  
                             }
                         }
                         else {
@@ -140,9 +145,10 @@ $(document).ready(function()
             success: function (obj, textstatus) {
                         if( !('error' in obj) ) {
                             console.log(obj.result);
-                            if(obj.result)
+                            if(obj.result != false)
                             {
-                                alert("valid");
+                                createCookie(obj.result.Email, $(location).attr('href'));
+                                window.location.href = ($(location).attr('href') + "PatientPortal");
                             }
                             else
                             {
@@ -176,5 +182,14 @@ $(document).ready(function()
             return phone_val;
         return false;
     }
+    
+    // Creates a cookie that lasts 5 minutes
+    function createCookie(value, path)
+    {
+        var date = new Date();
+        date.setTime(date.getTime()+(1*5*60*1000));
+        document.cookie = "user="+value+"; expires="+date.toGMTString()+"; path=" + path + "/PatientPortal;";
+    }
+
 
 });
