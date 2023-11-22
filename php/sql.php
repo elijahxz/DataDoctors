@@ -152,12 +152,13 @@
 
 
     // Queries for a patient based on their email.
+    // Used on patient portal
     function query_patient($email)
     {
         $results = [];
         $conn = OpenDb("3308");
         
-        $stmt = $conn -> prepare("SELECT * FROM PATIENT WHERE Email=?");
+        $stmt = $conn -> prepare("SELECT * FROM PATIENT WHERE Email=? AND Ssn IN (SELECT Pssn FROM PATIENTQUEUE)");
 
         $stmt->bind_param("s", $email);
 

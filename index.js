@@ -76,10 +76,21 @@ $(document).ready(function()
                 alert("No special characters allowed in address");
                 return;
             }
-            // do nothing here, just dont check for alphanumerics
-            else if(data[i].name == "Dob" || data[i].name == "Symptoms")
+            else if(data[i].name == "Dob")
             {
-                data[i].value = data[i].value;
+                if (data[i].value == "")
+                {
+                    alert("Please enter a date of birth");
+                    return;
+                }
+            }
+            else if(data[i].name == "Symptoms")
+            {
+                if (data[i].value == "")
+                {
+                    alert("Please enter symptoms before continuing"); 
+                    return;
+                }
             }
             else if(ALPHANUMERIC(data[i].value) == false)
             {
@@ -121,10 +132,11 @@ $(document).ready(function()
     });
 
     $("#Appointment").on('change', function(e){
+        console.log($(this).val());
         if($(this).val() == "Y")
         {
             $("#symptoms-div").hide();
-            $("#Symptoms-c").val("");
+            $("#Symptoms").val("");
         }
         else
         {
@@ -153,6 +165,14 @@ $(document).ready(function()
                 if (data[i].value == "Y")
                 {
                     appointment = true;
+                }
+            }
+            if(data[i].name == "Symptoms")
+            {
+                if (data[i].value == "")
+                {
+                    alert("Please enter symptoms before continuing"); 
+                    return;
                 }
             }
             items.push(data[i].value); 
@@ -205,10 +225,16 @@ $(document).ready(function()
     // Ensure the user inserted a 10 digit number, returns false if 
     // they did not, and returns the 10 digit number without any 
     // dashes if they it is a length of 10.
-    function verifyPhoneOrSocial(phone, length){
-        phone_val = phone.replace(/\-/g, "");
-        if (phone_val.match(/\d/g).length === length)
-            return phone_val;
+    function verifyPhoneOrSocial(value, length){
+        val = value.replace(/\-/g, "");
+        
+        if(val == "")
+        {
+            return false;
+        }
+
+        if (val.match(/\d/g).length === length)
+            return val;
         return false;
     }
     
