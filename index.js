@@ -212,11 +212,11 @@ $(document).ready(function()
         return false;
     }
     
-    // Creates a cookie that lasts 5 minutes
+    // Creates a cookie that lasts 30 minutes
     function createCookie(name, value, path)
     {
         var date = new Date();
-        date.setTime(date.getTime()+(1*5*60*1000));
+        date.setTime(date.getTime()+(1*30*60*1000));
         document.cookie = name+"="+value+"; expires="+date.toGMTString()+"; path=" + path + "/PatientPortal;";
     }
 

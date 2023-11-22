@@ -23,6 +23,7 @@
         $results = [];
         $conn = OpenDb("3308");
         
+        // First, check if the user exists in the patient table 
         $stmt = $conn -> prepare("SELECT * FROM PATIENT WHERE Ssn=? AND Dob=?");
 
         $stmt->bind_param("ss", $ssn, $dob);
@@ -30,13 +31,19 @@
         $stmt->execute();
 
         $result = $stmt -> get_result();
-
+        
+        // Ssn is the pk, so there should only be one result
         if($result -> num_rows == 1)
         { 
+            // push user data to array
             array_push($results, $result -> fetch_assoc());  
 
+            // Check if the user has an appointment 
             if ($appointment == "Y")
             {
+
+                // Get all appointments from the user, 
+                // and order by timestamp
                 $stmt = $conn -> prepare("SELECT * FROM APPOINTMENTS " . 
                                          "WHERE Pssn=? " . 
                                             "AND Date_time >= DATE(NOW()) " .
@@ -46,14 +53,18 @@
                 $stmt->execute();
 
                 $result = $stmt -> get_result();
-                
+
+                // If there is no results, error 
                 if($result -> num_rows < 1)
                 {
                     CloseDB($conn);
                     return false;
                 }
-                array_push($results, $result -> fetch_assoc());  
                 
+                // add closest appointment details to the array
+                array_push($results, $result -> fetch_assoc());  
+
+                // Insert the patient into the queue
                 if (insert_patientqueue($conn, $ssn, $appointment, $results[1]['Symptoms']) == false)
                 {
                     return false;
@@ -61,6 +72,7 @@
             }
             else
             {
+                // If the user does not have an appointment, still insert them into the patient queue
                 if (insert_patientqueue($conn, $ssn, $appointment, $symptoms) == false)
                 {
                     return false;
@@ -101,10 +113,27 @@
         CloseDB($conn);
 
         return true;
-    }
-
+    } 
+    // Inserts a patient into the queue 
     function insert_patientqueue($conn, $ssn, $appointment, $symptoms)
     {
+        // First, check if patient is already in the queue
+        $stmt = $conn -> prepare("SELECT * FROM PATIENTQUEUE WHERE Pssn=?");
+
+        $stmt->bind_param("s", $ssn);
+
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // Ssn is the pk, so there should only be one result
+        // Since they are already in the queue, we will assume thieir cookie expired and they are trying to reaccess
+        // The queue time
+        if($result -> num_rows == 1)
+        {
+            return true;
+        }
+
         // If we are here, insert an entry into the patientqueue;
         try{
             $stmt = $conn -> prepare("INSERT INTO PATIENTQUEUE VALUES(?, ?, CURRENT_TIMESTAMP(), ?)");
@@ -138,8 +167,15 @@
 
         if($result -> num_rows == 1)
         { 
-            $results = $result -> fetch_assoc();  
-            
+            // Store the results
+            array_push($results, $result -> fetch_assoc());  
+             
+            $result = $conn -> query("Select COUNT(*) FROM PATIENTQUEUE");
+
+            $row = $result -> fetch_row();
+
+            array_push($results, $row[0]);
+
             CloseDB($conn);
             
             return $results;

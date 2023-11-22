@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+    const WAIT = "Current Wait Time: ";
     var user = getCookie("user");
     var appointment = getCookie("appointment");
     console.log(user, appointment);
@@ -35,7 +36,7 @@ $(document).ready(function()
                             if( !('error' in obj) ) {
                                 if(obj.result != false)
                                 {
-                                    console.log(obj.result);  
+                                    insert_user_data(obj.result);
                                 }
                                 else
                                 {
@@ -52,15 +53,27 @@ $(document).ready(function()
                 return;
             });
     }
+    function insert_user_data(data)
+    {
+        user_data = data[0];
+        wait_time = parseInt(data[1]) * 15; 
+        if (wait_time == 0)
+        {
+            wait_time = 5;
+        }
+        $("#welcome").html("Welcome " + user_data.Fname + " " + user_data.Lname + "!");
+        $("#wait").html(WAIT + wait_time + " Min(s)");
+    } 
 
-    // Just to prevent SQL Injection / hacking, reverify that we have a valid email in the cookie
-
+    // This website has no security when it comes to hacking, but just for fun ... 
+    // Reverify that we have a valid email in the cookie
     // Ensures the user inserts a valid email.
     function verifyEmail(email){
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
     }
-
+    
+    // Retrieved from w3schools
     function getCookie(cname) {
         let name = cname + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
