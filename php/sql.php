@@ -18,7 +18,7 @@
     }
 
     // Checks if a patient exists in the patient table
-    function check_in($ssn, $dob, $appointment)
+    function check_in($ssn, $dob, $appointment, $symptoms)
     {
         $results = [];
         $conn = OpenDb("3308");
@@ -35,25 +35,40 @@
         { 
             array_push($results, $result -> fetch_assoc());  
 
-            if ($appointment == "true")
+            if ($appointment == "Y")
             {
                 $stmt = $conn -> prepare("SELECT * FROM APPOINTMENTS " . 
                                          "WHERE Pssn=? " . 
                                             "AND Date_time >= DATE(NOW()) " .
                                             "ORDER BY Date_time");
-                $stmt->bind_param("s", $appointment);
+                $stmt->bind_param("s", $ssn);
 
                 $stmt->execute();
 
                 $result = $stmt -> get_result();
                 
-                if($result -> num_rows != 1)
+                if($result -> num_rows < 1)
                 {
                     CloseDB($conn);
                     return false;
                 }
                 array_push($results, $result -> fetch_assoc());  
+                
+                if (insert_patientqueue($conn, $ssn, $appointment, $results[1]['Symptoms']) == false)
+                {
+                    return false;
+                }
             }
+            else
+            {
+                if (insert_patientqueue($conn, $ssn, $appointment, $symptoms) == false)
+                {
+                    return false;
+                }
+            } 
+            
+            CloseDB($conn);
+            
             return $results;
         }
        
@@ -68,11 +83,35 @@
         try{
             $stmt = $conn -> prepare("INSERT INTO PATIENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            $stmt->bind_param("ssssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8], $args[9]);
+            $stmt->bind_param("ssssssssss", $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8], $args[9], $args[10]);
 
             $stmt->execute();
-
+        }
+        catch (Exception $e)
+        {
             CloseDB($conn);
+            return false;
+        }
+        
+        if( insert_patientqueue($conn, $args[1], "N", $args[0] ) == false)
+        {
+            return false;
+        }
+
+        CloseDB($conn);
+
+        return true;
+    }
+
+    function insert_patientqueue($conn, $ssn, $appointment, $symptoms)
+    {
+        // If we are here, insert an entry into the patientqueue;
+        try{
+            $stmt = $conn -> prepare("INSERT INTO PATIENTQUEUE VALUES(?, ?, CURRENT_TIMESTAMP(), ?)");
+
+            $stmt->bind_param("sss", $ssn, $appointment, $symptoms);
+
+            $stmt->execute();
         }
         catch (Exception $e)
         {
@@ -81,6 +120,7 @@
         }
         return true;
     }
+
 
     // Queries for a patient based on their email.
     function query_patient($email)
@@ -121,24 +161,24 @@
             //    $aResult['result'] = DisplaySuppliers();
             //    break;
             case 'check_in':
-                if (check_arguments($_POST, 3) == True)
+                if (check_arguments($_POST, 4) == True)
                 {
-                    $aResult['result'] = check_in($_POST['arguments'][0], $_POST['arguments'][1], $_POST['arguments'][2]);
+                    $aResult['result'] = check_in($_POST['arguments'][0], $_POST['arguments'][1], $_POST['arguments'][2], $_POST['arguments'][3]);
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 3);
+                    $aResult['error'] = check_arguments($_POST, 4);
                 }
                 break;
             case 'create_patient':
-                if (check_arguments($_POST, 10) == True)
+                if (check_arguments($_POST, 11) == True)
                 {
                     // Since there are ten arguments, just pass in the list 
                     $aResult['result'] = create_patient($_POST['arguments']);
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 10);
+                    $aResult['error'] = check_arguments($_POST, 11);
                 }
                 break;
             case 'patient_portal':

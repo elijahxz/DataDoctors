@@ -77,7 +77,7 @@ $(document).ready(function()
                 return;
             }
             // do nothing here, just dont check for alphanumerics
-            else if(data[i].name == "Dob")
+            else if(data[i].name == "Dob" || data[i].name == "Symptoms")
             {
                 data[i].value = data[i].value;
             }
@@ -88,7 +88,7 @@ $(document).ready(function()
             }
             items.push(data[i].value); 
         }
-        
+
         // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
@@ -100,8 +100,8 @@ $(document).ready(function()
                             console.log(obj.result);
                             if(obj.result)
                             {
-                                // here we know items is 5, console.log the structure of items if there is an error.
-                                createCookie(items[5], $(location).attr('href'));
+                                // here we know items is 6, console.log the structure of items if there is an error.
+                                createCookie("user", items[6], $(location).attr('href'));
                                 window.location.href = ($(location).attr('href') + "PatientPortal");
                             }
                             else
@@ -119,6 +119,19 @@ $(document).ready(function()
             return;
         });
     });
+
+    $("#Appointment").on('change', function(e){
+        if($(this).val() == "Y")
+        {
+            $("#symptoms-div").hide();
+            $("#Symptoms-c").val("");
+        }
+        else
+        {
+            $("#symptoms-div").show();
+        }
+    });
+
 
     $("#check-in-btn").on('click', function(e){
         e.preventDefault();
@@ -139,17 +152,12 @@ $(document).ready(function()
             {
                 if (data[i].value == "Y")
                 {
-                    data[i].value = true;
                     appointment = true;
-                }
-                else
-                {
-                    data[i].value = false;
                 }
             }
             items.push(data[i].value); 
         }
-        
+        console.log(items);
         jQuery.ajax({
             type: "POST",
             url: 'php/sql.php',
