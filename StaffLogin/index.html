@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Login</title>
+    
+    <!-- I used a button because the styling is a bit easier -->
+    <button style = "float: right; margin: 15px;"  class = "btn btn-warning" id = "home-btn">Home</button>
+    
     <div class = "text-center" style = "padding-top: 100px;">
         <h1 class = "mb-3" style = "font-size: 100px; background-color: #FFFFFF; width: 800px; margin: auto; border-radius: 20px;"> Employee Login </h1>
     </div>
@@ -14,10 +18,9 @@
 </head>
 <body style = "width: 100%; height: 100%; background-image: url(../images/patrick-tomasso-QMDap1TAu0g-unsplash.jpg); background-size: 100% 100%;">
 
-
 	<div id = "bodyholder">
         <div style = "max-width: 500px; margin: auto; padding-top: 30px;">
-            <form>
+            <form id = "staff-login-form">
               <div class="form-group">
                   <label for="empid" style = "font-size: 30px; padding: 5px; background-color: #FFFFFF; border-radius: 20px;">Employee ID</label>
                   <input class="form-control" id="empid" name = "empid" placeholder="Enter EID" style = "font-size: 25px;">
@@ -26,7 +29,7 @@
                   <label for="pass" style = "font-size: 30px; padding: 5px; background-color: #FFFFFF; border-radius: 20px;">Password</label>
                   <input type="password" class="form-control" id="pass" name = "pass" placeholder="Password" style = "font-size: 25px">
               </div>
-              <button type="submit" class="btn btn-primary" style = "margin-top: 15px; font-size: 25px;">Submit</button>
+              <button id = "employee-login-btn" type="submit" class="btn btn-primary" style = "margin-top: 15px; font-size: 25px;">Submit</button>
             </form>
         <div>
     </div>

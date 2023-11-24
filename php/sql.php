@@ -1,4 +1,7 @@
 <?php
+    // This php file contains all of the SQL functionality for this program.
+    // Each page that uses the database will call into this file.     
+
     include 'connect.php';
     
     // A portion of this code is from https://stackoverflow.com/questions/15757750/how-can-i-call-php-func
@@ -184,7 +187,57 @@
         CloseDB($conn);
         return false;
     }
+    function employee_login($eid, $pass)
+    {
+        $results = [];
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT * FROM EMPLOYEE " . 
+                                 "WHERE Emp_id=? ". 
+                                    "AND Pass=?");
 
+        $stmt->bind_param("ss", $eid, $pass);
+        
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // There should only be one result since eid is pk
+        if($result -> num_rows == 1)
+        {
+            $row = $result -> fetch_assoc();
+            return $row['Department']; 
+        }
+        else
+        {
+            return false;
+        }
+    }
+    function query_employee($eid)
+    {
+        $results = [];
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT * FROM EMPLOYEE " . 
+                                 "WHERE Emp_id=? ");
+
+        $stmt->bind_param("s", $eid);
+        
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // There should only be one result since eid is pk
+        if($result -> num_rows == 1)
+        {
+            $row = $result -> fetch_assoc();
+            return $row; 
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     // Start of global space
     if( !isset($_POST['functionname']) )
@@ -228,6 +281,28 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+            case 'employee_login':
+                if (check_arguments($_POST, 2) == True)
+                {
+                    $aResult['result'] = employee_login($_POST['arguments'][0], $_POST['arguments'][1]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 2);
+                }
+                break;
+            case 'employee_portal': 
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = query_employee($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
+
+               
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
                 break;
