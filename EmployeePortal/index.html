@@ -14,15 +14,33 @@
 </head>
 <body class="bg-secondary">
 	<div id = "bodyholder">
-        <div style = "max-width: 500px; margin: auto; padding-top: 30px;">
+        <div style = "max-width: 750px;; margin: auto; padding-top: 30px;">
             <h3 id = "welcome"> </h3>
         <div>
-        <div style = "width: 500px; margin: auto; padding-top: 10px;">
-            <table id = "patient-queue-table" class="table table-dark table-hover caption-top" style = "max-width: 500px;">
+        <div style = "width: 750px;; margin: auto; padding-top: 10px;">
+            <table id = "employee-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;;">
+                <caption>Available Employees For Assignment</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Eid</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Department</th>
+                    </tr>
+                </thead>
+                <tbody id = "employee-body">
+                </tbody>
+            </table>
+        </div>
+
+        <div style = "width: 750px;; margin: auto; padding-top: 10px;">
+            <table id = "patient-queue-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;;">
                 <caption>Current Patient Queue</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Sno</th>
+                        <th scope="col">Ssn</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">App_flg</th>
                         <th scope="col">Check In Time</th>
                         <th scope="col">Symptoms</th>
@@ -31,11 +49,26 @@
                 <tbody id = "patient-queue-body">
                 </tbody>
             </table>
-            <button id = "remove-queue-btn" class = "btn btn-primary" style = "display: none; float: right;"> Assign & Remove </button>
         </div>
-        <div style = "width: 500px; margin: auto; padding-top: 10px; display: none;" id = "non-appointment-div">
+        <div id = "appointment-div" style = "width: 750px;; margin: auto; padding-top: 10px; display: none;">
+             <table id = "appointment-info-table" class="table table-sm table-dark table-hover" style = "max-width: 750px;;">
+                <thead>
+                    <tr>
+                        <th scope="col">Appointment Time</th>
+                        <th scope="col">Eid</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Department</th>
+                    </tr>
+                </thead>
+                <tbody id = "appointment-info-body">
+                </tbody>
+            </table>
+            <button id = "remove-queue-btn" class = "btn btn-primary" style = "float: right;"> Assign & Remove </button>
+        </div>
+        <div style = "width: 750px;; margin: auto; padding-top: 10px; display: none;" id = "non-appointment-div">
             <h4> Assign Doctor and Remove From Queue</h4>
-            <form id = "update-non-appointment-patient" style = "max-width: 500px;">
+            <form id = "update-non-appointment-patient" style = "max-width: 750px;;">
                 <div class = "form-group" style = "padding-bottom: 10px;">
                     <label for = "Employee"> Employee </label>
                     <select name = "Employee" id = "Employee">

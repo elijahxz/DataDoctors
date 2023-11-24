@@ -160,21 +160,6 @@ $(document).ready(function()
                 alert("Invalid Social Security Number, please check it and try again");
                 return;
             }
-            if(data[i].name == "Appointment")
-            {
-                if (data[i].value == "Y")
-                {
-                    appointment = true;
-                }
-            }
-            if(data[i].name == "Symptoms")
-            {
-                if (data[i].value == "")
-                {
-                    alert("Please enter symptoms before continuing"); 
-                    return;
-                }
-            }
             items.push(data[i].value); 
         }
         console.log(items);
@@ -243,7 +228,7 @@ $(document).ready(function()
     {
         var date = new Date();
         date.setTime(date.getTime()+(1*30*60*1000));
-        document.cookie = name+"="+value+"; expires="+date.toGMTString()+"; path=" + path + "/PatientPortal;";
+        document.cookie = name+"="+value+"; expires="+date.toGMTString()+"; path=/;";
     }
 
 

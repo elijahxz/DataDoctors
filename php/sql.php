@@ -215,7 +215,6 @@
     }
     function query_employee($eid)
     {
-        $results = [];
         $conn = OpenDb("3308");
         
         $stmt = $conn -> prepare("SELECT * FROM EMPLOYEE " . 
@@ -243,7 +242,8 @@
     {
         $resultArray = array();
         $conn = OpenDB("3308");
-        $result = $conn -> query("SELECT * FROM PATIENTQUEUE");
+        $result = $conn -> query("SELECT P.*, PA.Fname, PA.Lname FROM PATIENTQUEUE P " .
+                                 "JOIN PATIENT PA ON PA.Ssn = P.Pssn");
         while ($row = $result->fetch_row()) {
             $resultArray[] = $row;
         }
@@ -266,6 +266,42 @@
         }
         CloseDB($conn);
         return $resultArray;
+    }
+
+    // Gets the patients doctor for the appointment. 
+    // It will return all of the patients appointments from today forward. 
+    // Javascript can decide which one it wants to use :).
+    function get_appointment_doctor($pssn)
+    {
+        $resultArray = array();
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT A.Date_time, E.Emp_id, E.Fname, E.Lname, D.Dname " . 
+            "FROM EMPLOYEE E, DEPARTMENT D, APPOINTMENTS A " .
+            "WHERE D.Dnum = E.Department " .
+                "AND E.Emp_id = A.Emp_id " .
+                "AND A.Pssn=? " .
+                "AND A.Date_time >= CURDATE() " .
+                "ORDER BY A.Date_time");
+
+        $stmt->bind_param("s", $pssn);
+        
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // There should only be one result since eid is pk
+        if($result -> num_rows >= 1)
+        {
+            while ($row = $result->fetch_row()) {
+                $resultArray[] = $row;
+            }
+            return $resultArray; 
+        }
+        else
+        {
+            return false;
+        }
     }
 
     // Start of global space
@@ -336,6 +372,17 @@
             
             case 'get_open_employees':
                 $aResult['result'] = get_open_employees();
+                break;
+
+            case 'get_appointment_doctor':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = get_appointment_doctor($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
                 break;
 
             default:

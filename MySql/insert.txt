@@ -26,7 +26,7 @@ Emp_id, Pass, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay
 
 PATIENT
 Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
-999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed, 822 Hummingbird Ln, Murfreesboro, TN, 37055
+999887777, John, Snow, 7773335995, 1988-04-01, johnsnownotappleseed@email.com, 822 Hummingbird Ln, Murfreesboro, TN, 37055
 888776666, Emily, White, 6159998888, 1995-12-15, emily.white@email.com, 456 Redwood St, Nashville, TN, 37209
 777665555, James, Black, 6157771234, 1980-06-22, james.black@email.com, 789 Birch Ave, Franklin, TN, 37064
 666554444, Sophia, Green, 6154445678, 1992-09-05, sophia.green@email.com, 123 Elm St, Brentwood, TN, 37027

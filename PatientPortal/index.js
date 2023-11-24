@@ -57,7 +57,10 @@ $(document).ready(function()
     {
         user_data = data[0];
         wait_time = parseInt(data[1]) * 15; 
-        if (wait_time == 0)
+        
+        // When the wait time is only 15 minutes, that mean the current
+        // Patient is the only patient in the queue, so set it to 5 mins.
+        if (wait_time == 15)
         {
             wait_time = 5;
         }
