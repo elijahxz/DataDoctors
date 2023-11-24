@@ -43,6 +43,9 @@ App_id, Date_time, Symptoms, Pssn, Emp_id, Department
 PATIENTQUEUE
 Pssn, App_flg, Check_in, Symptoms
 
+CURRENTPATIENT
+Emp_id, Pssn
+
 MEDICALHISTORY
 Pssn, Allergies, Surgeries
 999887777, None, None

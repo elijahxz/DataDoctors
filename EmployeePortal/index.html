@@ -15,8 +15,36 @@
 <body class="bg-secondary">
 	<div id = "bodyholder">
         <div style = "max-width: 500px; margin: auto; padding-top: 30px;">
-            <p id = "welcome"> </p>
+            <h3 id = "welcome"> </h3>
         <div>
+        <div style = "width: 500px; margin: auto; padding-top: 10px;">
+            <table id = "patient-queue-table" class="table table-dark table-hover caption-top" style = "max-width: 500px;">
+                <caption>Current Patient Queue</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Sno</th>
+                        <th scope="col">App_flg</th>
+                        <th scope="col">Check In Time</th>
+                        <th scope="col">Symptoms</th>
+                    </tr>
+                </thead>
+                <tbody id = "patient-queue-body">
+                </tbody>
+            </table>
+            <button id = "remove-queue-btn" class = "btn btn-primary" style = "display: none; float: right;"> Assign & Remove </button>
+        </div>
+        <div style = "width: 500px; margin: auto; padding-top: 10px; display: none;" id = "non-appointment-div">
+            <h4> Assign Doctor and Remove From Queue</h4>
+            <form id = "update-non-appointment-patient" style = "max-width: 500px;">
+                <div class = "form-group" style = "padding-bottom: 10px;">
+                    <label for = "Employee"> Employee </label>
+                    <select name = "Employee" id = "Employee">
+                    </select>
+                </div>
+                <button class = "btn btn-primary" id = "update-shipment"> Submit </button>
+            </form>
+        </div>
+
     </div>
 </body>
 <!-- bootstrap js -->

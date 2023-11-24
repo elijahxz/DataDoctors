@@ -239,6 +239,35 @@
         }
     }
 
+    function get_patient_queue()
+    {
+        $resultArray = array();
+        $conn = OpenDB("3308");
+        $result = $conn -> query("SELECT * FROM PATIENTQUEUE");
+        while ($row = $result->fetch_row()) {
+            $resultArray[] = $row;
+        }
+        CloseDB($conn);
+        return $resultArray;
+    }
+
+    function get_open_employees()
+    {
+        $resultArray = array();
+        $conn = OpenDB("3308");
+        $result = $conn -> query("SELECT E.Emp_id, E.Fname, E.Lname, D.Dname " .
+                                 "FROM EMPLOYEE E, DEPARTMENT D " . 
+                                 "WHERE E.Department = D.Dnum " .
+                                    "AND D.Dnum != 1 " .
+                                    "AND D.Dnum != 3 " .
+                                    "AND E.Emp_id NOT IN (SELECT Emp_id FROM CURRENTPATIENT)");
+        while ($row = $result->fetch_row()) {
+            $resultArray[] = $row;
+        }
+        CloseDB($conn);
+        return $resultArray;
+    }
+
     // Start of global space
     if( !isset($_POST['functionname']) )
     {
@@ -301,8 +330,14 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+            case 'patient_queue':
+                $aResult['result'] = get_patient_queue();
+                break;
+            
+            case 'get_open_employees':
+                $aResult['result'] = get_open_employees();
+                break;
 
-               
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
                 break;
