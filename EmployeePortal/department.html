@@ -14,9 +14,48 @@
 </head>
 <body class="bg-secondary">
 	<div id = "bodyholder">
-        <div style = "max-width: 500px; margin: auto; padding-top: 30px;">
+        <div style = "max-width: 1000px; margin: auto; padding-top: 30px;">
             <p id = "welcome"> </p>
         <div>
+        
+        <div style = "width: 1000px; margin: auto; padding-top: 10px;">
+            <table id = "patient-table" class="table table-dark table-hover caption-top" style = "max-width: 1000px;">
+                <caption>Current Patient</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Ssn</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Dob</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zip Code</th>
+                    </tr>
+                </thead>
+                <tbody id = "patient-body">
+                </tbody>
+            </table>
+        </div>
+        <div style = "width: 1000px; margin: auto; padding-top: 10px;">
+            <table id = "patient-history-table" class="table table-dark table-hover caption-top" style = "max-width: 1000px;">
+                <caption>Patient History</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Allergies</th>
+                        <th scope="col">Surgeries</th>
+                    </tr>
+                </thead>
+                <tbody id = "patient-history">
+                </tbody>
+            </table>
+        </div>
+
+
+        
+
     </div>
 </body>
 <!-- bootstrap js -->
@@ -27,6 +66,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- Link to the javascript file used for our page -->
-<script src="index.js"></script>
+<script src="department.js"></script>
 
 </html>

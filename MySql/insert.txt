@@ -16,13 +16,14 @@ Dnum, Dname
 
 EMPLOYEE
 Emp_id, Pass, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay
-00000001, test, John, Smith, 543219876, Doctor, 1, 2002-11-01, 150212.52
-00000002, test, Sarah, Jones, 123456789, Nurse, 1, 2005-04-04, 70567.34
-00000003, test, Michael, Brown, 987654321, Janitor, 3, 2010-08-15, 40000.00
-00000004, test, Emily, Davis, 654321987, Nurse, 4, 2015-02-22, 60000.00
-00000005, test, Robert, Taylor, 456789012, Doctor, 6, 2018-07-10, 180000.00
-00000006, test, Olivia, Wilson, 789012345, Nurse, 4, 2020-01-05, 75000.00
-00000007, test, Ethan, Martin, 567890123, Doctor, 5, 2022-04-30, 160000.00
+00000001, test, Ques, Johnson, 123121234, Admin, 1, 2002-11-01, 300000.00
+00000002, test, John, Smith, 543219876, Doctor, 2, 2002-11-01, 150212.52
+00000003, test, Sarah, Jones, 123456789, Nurse, 2, 2005-04-04, 70567.34
+00000004, test, Michael, Brown, 987654321, Janitor, 3, 2010-08-15, 40000.00
+00000005, test, Emily, Davis, 654321987, Nurse, 4, 2015-02-22, 60000.00
+00000006, test, Robert, Taylor, 456789012, Doctor, 6, 2018-07-10, 180000.00
+00000007, test, Olivia, Wilson, 789012345, Nurse, 4, 2020-01-05, 75000.00
+00000008, test, Ethan, Martin, 567890123, Doctor, 5, 2022-04-30, 160000.00
 
 PATIENT
 Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
@@ -35,7 +36,7 @@ Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
 APPOINTMENTS
 App_id, Date_time, Symptoms, Pssn, Emp_id, Department
 00000001, 2023-12-10 13:30:00, Broken Leg, 999887777, 00000002, 2
-00000002, 2023-12-11 09:45:00, Fever, 888776666, 00000004, 4
+00000002, 2023-12-11 09:45:00, Fever, 888776666, 00000003, 4
 00000003, 2023-12-13 14:15:00, Chest Pain, 777665555, 00000007, 5
 00000004, 2023-12-13 10:30:00, Headache, 666554444, 00000005, 6
 00000005, 2023-12-14 11:00:00, Sore Throat, 555443333, 00000006, 3
@@ -48,11 +49,11 @@ Emp_id, Pssn
 
 MEDICALHISTORY
 Pssn, Allergies, Surgeries
-999887777, None, None
+999887777, NULL, NULL
 888776666, Penicillin, Appendectomy
-777665555, None, Knee Surgery
+777665555, NULL, Knee Surgery
 666554444, Sulfa, Tonsillectomy
-555443333, None, Wisdom Teeth Removal
+555443333, NULL, Wisdom Teeth Removal
 
 BILLING
 Tran_id, Pssn, Paid

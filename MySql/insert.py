@@ -83,8 +83,10 @@ for line in file:
         value_placeholder = "%s"
 
         # Strip the elements, and add placeholders for sql string
-        for element in range(len(row)): 
+        for element in range(len(row)):
             row[element] = row[element].strip()
+            if(row[element] == "NULL"):
+                row[element] = None
             if element != 0:
                 value_placeholder += ", %s"
 

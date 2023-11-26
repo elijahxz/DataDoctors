@@ -6,10 +6,10 @@ $(document).ready(function()
     // Takes the user back to the previous page with an invalid cookie
     if (employee == "")
     {  
-        // will look like .... DataDoctors/PatientPortal/
+        // will look like .... DataDoctors/EmployeePortal/
         var current = $(location).attr('href');
         
-        // Removes the last slash and looks like ...DataDoctors/PatientPortal
+        // Removes the last slash and looks like ...DataDoctors/EmployeePortal
         current = current.substr(0, current.lastIndexOf("\/"));
 
         // Removes the last slash again and looks like ....DataDoctors
@@ -22,6 +22,12 @@ $(document).ready(function()
         get_employee_data();
         get_patient_queue();
         get_open_employees();
+        
+        // Update the page every 30 seconds. 
+        setInterval(function(){
+            get_patient_queue();
+            get_open_employees();
+        }, 30000)
     }
     
     // This controlls the Current Patient Queue Table, it is selectable. 
@@ -60,24 +66,57 @@ $(document).ready(function()
    
     // This will get the attributes of the selected column and attempt to remove the element from the queue table.
     $("#remove-queue-btn").on('click', function(e){
-        
+        console.log("in here"); 
         var items = [];
 
-        var selected = $(".table-success").children();
-       
-        // We should always have four values 
-        if(selected.length != 4)
+        var patient_selected = $(".table-success").children();
+        var employee = $("#appointment-info-body tr").children();
+
+
+
+        // We should always have 6 values for the patient 
+        if(patient_selected.length != 6 || employee.length != 5)
         {
             return;
         }
 
-        for(var i = 0; i < selected.length; i++)
+        // Push the Employee Id to the front of the items array.
+        items.push(employee[1].innerText);
+
+        // Push the Patient's ssn to the list
+        items.push(patient_selected[0].innerText); 
+        
+        assign_employee_patient(items)
+        
+        $("#appointment-div").hide();
+    });
+    
+    $("#update-non-appointment-btn").on('click', function(e){
+        e.preventDefault();
+        console.log("in here"); 
+        var items = [];
+
+        var patient_selected = $(".table-success").children();
+        var employee = $("#Employee").val();
+
+        // We should always have 6 values for the patient 
+        if(patient_selected.length != 6 || employee == 'null')
         {
-            items.push(selected[i].innerText);
+            return;
         }
 
-        console.log(items);
+        // Push the Employee Id to the front of the items array.
+        items.push(employee);
+
+        // Push the Patient's ssn to the list
+        items.push(patient_selected[0].innerText); 
+        
+        assign_employee_patient(items);
+        
+        $("#non-appointment-div").hide();
     });
+
+
 
     // Set a 15 minute timer to see if the user is still here. 
     //setTimeout(function, 54000000);
@@ -315,6 +354,38 @@ $(document).ready(function()
             $("#remove-queue-btn").prop('disabled', false);
         }
     }
+
+    function assign_employee_patient(items)
+    {
+        jQuery.ajax({
+                type: "POST",
+                url: '../php/sql.php',
+                dataType: 'json',
+                data: {functionname: 'assign_employee_patient', arguments: items},
+                success: function (obj, textstatus) {
+                            if( !('error' in obj) ) {
+                                if(obj.result != false)
+                                {
+                                    get_open_employees();
+                                    get_patient_queue();
+                                    alert("Success!");      
+                                }
+                                else
+                                {
+                                    alert("There has been an error in our database system. Please contact an administrator");
+                                }
+                            }
+                            else {
+                                  console.log(obj.error);
+                                  return;
+                            }
+                        }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log(jqXHR.responseText);
+                return;
+            });
+    }
+
 
     // Retrieved from w3schools
     function getCookie(cname) {

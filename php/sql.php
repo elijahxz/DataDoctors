@@ -268,6 +268,40 @@
         return $resultArray;
     }
 
+    function assign_employee_patient($eid, $pssn)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("INSERT INTO CURRENTPATIENT VALUES(?, ?)"); 
+
+            $stmt->bind_param("ss", $eid, $pssn);
+        
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+        
+        try{
+            $stmt = $conn -> prepare("DELETE FROM PATIENTQUEUE WHERE Pssn = ?"); 
+
+            $stmt->bind_param("s", $pssn);
+        
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+
+        CloseDB($conn);
+        return true;
+    }
+
+
     // Gets the patients doctor for the appointment. 
     // It will return all of the patients appointments from today forward. 
     // Javascript can decide which one it wants to use :).
@@ -290,7 +324,6 @@
 
         $result = $stmt -> get_result();
         
-        // There should only be one result since eid is pk
         if($result -> num_rows >= 1)
         {
             while ($row = $result->fetch_row()) {
@@ -303,6 +336,91 @@
             return false;
         }
     }
+
+    function check_queue($pssn)
+    {
+        $resultArray = array();
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT * FROM PATIENTQUEUE WHERE Pssn = ?");
+
+        $stmt->bind_param("s", $pssn);
+        
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // There should only be one result since eid is pk
+        if($result -> num_rows == 0)
+        {
+            $stmt = $conn -> prepare("SELECT E.Fname, E.Lname " .
+                                     "FROM CURRENTPATIENT C, EMPLOYEE E " .
+                                     "WHERE C.Pssn = ? " .
+                                        "AND E.Emp_id = C.Emp_id");
+
+            $stmt->bind_param("s", $pssn);
+        
+            $stmt->execute();
+
+            $result = $stmt -> get_result();
+            if($result -> num_rows == 1)
+            {
+                return $result->fetch_row();
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+
+    function get_current_patient($eid)
+    {
+        $resultArray = array();
+        $conn = OpenDb("3308");
+        
+        $stmt = $conn -> prepare("SELECT P.* " .
+                                 "FROM CURRENTPATIENT C, PATIENT P  " .
+                                 "WHERE C.Pssn = P.Ssn " .
+                                 "AND C.Emp_id = ?");
+
+        $stmt->bind_param("s", $eid);
+        
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        if($result -> num_rows == 1)
+        {
+            $row = $result->fetch_row();
+            $resultArray[] = $row;
+            
+            $stmt = $conn -> prepare("SELECT * FROM MEDICALHISTORY " . 
+                                 "WHERE Pssn=? ");
+
+            $stmt->bind_param("s", $row[0]);
+        
+            $stmt->execute();
+
+            $result = $stmt -> get_result();
+            
+            while ($row = $result->fetch_row()) {
+                $resultArray[] = $row;
+            }
+            return $resultArray;
+        }
+        else
+        {
+            return false;
+        }
+
+        return false;
+        
+    }
+
+
+
+
 
     // Start of global space
     if( !isset($_POST['functionname']) )
@@ -384,6 +502,40 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+
+            case 'assign_employee_patient':
+                if (check_arguments($_POST, 2) == True)
+                {
+                    $aResult['result'] = assign_employee_patient($_POST['arguments'][0], $_POST['arguments'][1]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 2);
+                }
+                break;
+
+            case 'check_queue':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = check_queue($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
+            
+            case 'get_current_patient':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = get_current_patient($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
+
 
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';

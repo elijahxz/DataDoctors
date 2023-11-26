@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
     var employee = getCookie("Emp_id");
-    
+
     // Takes the user back to the previous page with an invalid cookie
     if (employee == "")
     {  
@@ -19,6 +19,12 @@ $(document).ready(function()
     else
     {
         get_employee_data();
+        get_current_patient();
+        // Update the page every 30 seconds.
+        setInterval(function(){
+            get_current_patient();
+        }, 30000)
+
     }
 
     // Set a 15 minute timer to see if the user is still here. 
@@ -51,6 +57,108 @@ $(document).ready(function()
                 return;
             });
     }
+
+    function get_current_patient()
+    {
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'get_current_patient', arguments: [employee]},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            if(obj.result != false)
+                            {
+                                var patient_info = obj.result.shift();
+                                console.log(obj.result); 
+                                $("#patient-body").empty();
+                                $("#patient-body").append("<tr style = 'user-select: none;'>"+
+                                      "<th scope='row' name = 'ssn'>"+patient_info[0] + "</th>" +
+                                      "<td>"+ patient_info[1] + "</td>" +
+                                      "<td>"+ patient_info[2] + "</td>" +
+                                      "<td>"+ patient_info[3] + "</td>" +
+                                      "<td>"+ patient_info[4] + "</td>" +
+                                      "<td>"+ patient_info[5] + "</td>" +
+                                      "<td>"+ patient_info[6] + "</td>" +
+                                      "<td>"+ patient_info[7] + "</td>" +
+                                      "<td>"+ patient_info[8] + "</td>" +
+                                      "<td>"+ patient_info[9] + "</td>" +
+                                      "</tr>");
+                                
+                                if(obj.result.length != 0)
+                                {
+                                    $("#patient-history").empty();
+                                    var allergies = "";
+                                    var surgeries = "";
+                                    for(var i = 0; i < obj.result.length; i++)
+                                    {
+                                        if (obj.result[i][1] != null)
+                                        {
+                                            allergies = allergies + obj.result[i][1] + ", ";    
+                                        } 
+                                        if (obj.result[i][2] != null)
+                                        {
+                                            surgeries = surgeries + obj.result[i][2] + ", ";    
+                                        } 
+                                    }
+                                    console.log(allergies, surgeries);
+                                    allergies = allergies.replace(/,\s*$/, "");
+                                    surgeries = surgeries.replace(/,\s*$/, "");
+                                    if (allergies == "")
+                                    {
+                                        allergies = "None";
+                                    }
+                                    if (surgeries == "")
+                                    {
+                                        surgeries = "None";
+                                    }
+                                    $("#patient-history").append("<tr style = 'user-select: none;'>"+
+                                        "<td>" + allergies + "</td>" +
+                                        "<td>"+ surgeries + "</td>" +
+                                        "</tr>");
+                                }
+                                else
+                                {
+                                    $("#patient-history").append("<tr style = 'user-select: none;'>"+
+                                        "<td> None </td>" +
+                                        "<td> None </td>" +
+                                        "</tr>");
+                                }
+
+                                console.log(patient_info);
+                            }
+                            else
+                            {
+                                $("#patient-body").empty();
+                                $("#patient-history-body").empty();
+
+                                $("#patient-body").append("<tr style = 'user-select: none;'>" +
+                                    "<th scope='row'> No </th>" +
+		  						    "<td> Current </td>" +
+		  						    "<td> Patient </td>" +
+		  						    "<td> Assigned </td>" +
+		  						    "<td>  </td>" +
+		  						    "<td>  </td>" +
+		  						    "<td>  </td>" +
+		  						    "<td>  </td>" +
+		  						    "<td>  </td>" +
+		  						    "<td>  </td>" +
+		  						    "</tr>");
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log(jqXHR.responseText);
+                return;
+            });
+
+
+    }
+
     function insert_employee_data(data)
     {
         $("#welcome").html("Welcome " + data.Fname + " " + data.Lname + "!");
