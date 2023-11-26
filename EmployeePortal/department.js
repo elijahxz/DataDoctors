@@ -1,6 +1,9 @@
 $(document).ready(function()
 {
-    var employee = getCookie("Emp_id");
+    // Used to check for numerics on input field
+    const NUMERIC = value => /^[0-9\.]+$/gi.test(value);
+
+    var employee = getCookie("Emp_id_d");
 
     // Takes the user back to the previous page with an invalid cookie
     if (employee == "")
@@ -70,7 +73,6 @@ $(document).ready(function()
                             if(obj.result != false)
                             {
                                 var patient_info = obj.result.shift();
-                                console.log(obj.result); 
                                 $("#patient-body").empty();
                                 $("#patient-body").append("<tr style = 'user-select: none;'>"+
                                       "<th scope='row' name = 'ssn'>"+patient_info[0] + "</th>" +
@@ -85,6 +87,10 @@ $(document).ready(function()
                                       "<td>"+ patient_info[9] + "</td>" +
                                       "</tr>");
                                 
+                                $("#patient-history-table").show();
+                                $("#new-history").show();
+                                $("#new-bill").show();
+
                                 if(obj.result.length != 0)
                                 {
                                     $("#patient-history").empty();
@@ -98,12 +104,16 @@ $(document).ready(function()
                                         } 
                                         if (obj.result[i][2] != null)
                                         {
+                                            console.log(obj.result[i][2]);
                                             surgeries = surgeries + obj.result[i][2] + ", ";    
                                         } 
                                     }
                                     console.log(allergies, surgeries);
+
+                                    // Remove the last comma
                                     allergies = allergies.replace(/,\s*$/, "");
                                     surgeries = surgeries.replace(/,\s*$/, "");
+                                    
                                     if (allergies == "")
                                     {
                                         allergies = "None";
@@ -119,6 +129,7 @@ $(document).ready(function()
                                 }
                                 else
                                 {
+                                    $("#patient-history").empty();
                                     $("#patient-history").append("<tr style = 'user-select: none;'>"+
                                         "<td> None </td>" +
                                         "<td> None </td>" +
@@ -144,6 +155,52 @@ $(document).ready(function()
 		  						    "<td>  </td>" +
 		  						    "<td>  </td>" +
 		  						    "</tr>");
+                                $("#patient-history-table").hide();
+                                $("#new-history").hide();
+                                $("#new-bill").hide();
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log(jqXHR.responseText);
+                return;
+            });
+    }
+
+    $("#new-history-btn").on('click', function(e){
+        e.preventDefault();
+        var items = [];
+        var data  = $("#new-history-form").serializeArray();
+        
+        items.push($("#patient-body th").get(0).innerText); 
+        items.push(data[0].value);
+        items.push(data[1].value);
+
+        if (items[1] == "" && items[2] == "")
+        {
+            alert("Error, please enter a new allery or surgery");
+            return;
+        }
+        
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'insert_new_history', arguments: items},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            if(obj.result != false)
+                            {
+                                get_current_patient();
+                                alert("Success!");
+                            }
+                            else
+                            {
+                                alert("Error: Failure");
                             }
                         }
                         else {
@@ -156,6 +213,79 @@ $(document).ready(function()
                 return;
             });
 
+    });
+
+    $("#new-bill-btn").on('click', function(e){
+        e.preventDefault();
+        var items = [];
+        var data  = $("#new-bill-form").serializeArray();
+         
+        items.push($("#patient-body th").get(0).innerText); 
+        items.push(data[0].value);
+
+        if (data[0].value == "" || NUMERIC(data[0].value) == false)
+        {
+            alert("Bill amount must be a number!");
+            return;
+        }
+        
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'insert_new_bill', arguments: items},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            if(obj.result != false)
+                            {
+                                alert("Success! Bill Added.");
+                                clear_current_assignment();
+                            }
+                            else
+                            {
+                                alert("Error: Failure");
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log(jqXHR.responseText);
+                return;
+            });
+
+            
+    });
+
+    function clear_current_assignment()
+    {
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'clear_current_assignment', arguments: [employee]},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            if(obj.result != false)
+                            {
+                                get_current_patient();
+                            }
+                            else
+                            {
+                                alert("Error: Unable to clear current assignment, please contact Administration");
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log(jqXHR.responseText);
+                return;
+            });
 
     }
 

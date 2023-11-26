@@ -61,7 +61,6 @@ $(document).ready(function()
         }
 
         $(this).addClass('table-success').siblings().removeClass('table-success');
-        console.log($(this).children().get(1).innerText);
     });
    
     // This will get the attributes of the selected column and attempt to remove the element from the queue table.

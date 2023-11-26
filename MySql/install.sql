@@ -95,6 +95,7 @@ CREATE TABLE BILLING
 (
 	Tran_id 	CHAR(8)			NOT NULL,
 	Pssn		CHAR(9)			NOT NULL,
+    Amount      DECIMAL(10, 2)  NOT NULL,
 	Paid		CHAR(1)			NOT NULL,
 	PRIMARY KEY (Tran_id),
 	FOREIGN KEY (Pssn) REFERENCES PATIENT(Ssn)

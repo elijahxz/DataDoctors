@@ -71,10 +71,13 @@ $(document).ready(function()
                 alert("Zipcode must be numeric!");
                 return;
             }
-            else if(data[i].name == "Address" && ALPHANUMERIC_WSPACE(data[i].value) == false)
+            else if(data[i].name == "Address")
             {
-                alert("No special characters allowed in address");
-                return;
+                if (ALPHANUMERIC_WSPACE(data[i].value) == false)
+                {
+                    alert("No special characters allowed in address");
+                    return;
+                }
             }
             else if(data[i].name == "Dob")
             {

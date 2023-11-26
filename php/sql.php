@@ -418,8 +418,63 @@
         
     }
 
+    function insert_new_history($ssn, $allergy, $surgery)
+    {
+        $allergy = !empty($allergy) ? $allergy : NULL;
+        $surgery = !empty($surgery) ? $surgery : NULL;
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("INSERT INTO MEDICALHISTORY VALUES(?, ?, ?)");
 
+            $stmt->bind_param("sss", $ssn, $allergy, $surgery);
 
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+
+        return true;        
+    }
+    
+    function insert_new_bill($ssn, $amount)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("INSERT INTO BILLING " . 
+                                     "SELECT LPAD(MAX(Tran_id)+1, 6, '0'), ?, ?, '0' FROM BILLING");
+
+            $stmt->bind_param("ss", $ssn, $amount);
+
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+        return true;
+    }
+
+    function clear_current_assignment($eid)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("DELETE FROM CURRENTPATIENT WHERE Emp_id = ?"); 
+
+            $stmt->bind_param("s", $eid);
+        
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+        return true;
+    }
 
 
     // Start of global space
@@ -529,6 +584,39 @@
                 if (check_arguments($_POST, 1) == True)
                 {
                     $aResult['result'] = get_current_patient($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
+            
+            case 'insert_new_history':
+                if (check_arguments($_POST, 3) == True)
+                {
+                    $aResult['result'] = insert_new_history($_POST['arguments'][0], $_POST['arguments'][1], $_POST['arguments'][2]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 3);
+                }
+                break;
+
+            case 'insert_new_bill':
+                if (check_arguments($_POST, 2) == True)
+                {
+                    $aResult['result'] = insert_new_bill($_POST['arguments'][0], $_POST['arguments'][1]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 2);
+                }
+                break;
+
+            case 'clear_current_assignment':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = clear_current_assignment($_POST['arguments'][0]);
                 }
                 else
                 {

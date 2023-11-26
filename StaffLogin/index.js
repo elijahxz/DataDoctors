@@ -47,6 +47,7 @@ $(document).ready(function()
                         if (obj.result == 1)
                         {
                             current = current + "/EmployeePortal/";
+                            createCookie("Emp_id", items[0]);
                         }
                         else if(obj.result == 3)
                         {
@@ -56,9 +57,9 @@ $(document).ready(function()
                         else
                         {
                             current = current + "/EmployeePortal/department.html";
+                            createCookie("Emp_id_d", items[0]);
                         }
                         console.log(document.cookie);
-                        createCookie("Emp_id", items[0]);
                         createCookie("Department", obj.result);
                         window.location.href = current;
                     }

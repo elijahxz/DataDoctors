@@ -16,6 +16,7 @@
 	<div id = "bodyholder">
         <div style = "max-width: 1000px; margin: auto; padding-top: 30px;">
             <p id = "welcome"> </p>
+
         <div>
         
         <div style = "width: 1000px; margin: auto; padding-top: 10px;">
@@ -52,10 +53,31 @@
                 </tbody>
             </table>
         </div>
-
-
         
-
+        <div id = "new-history" style = "display: none; width: 1000px; margin: auto;">
+            <h2> Add new history </h2>
+            <form id = "new-history-form" style = "max-width: 1000px;">
+                <div class = "form-group">
+                    <label for = "Allergy"> Allergy </label>
+                    <input class = "form-control" name = "Allergy" id = "allergy" placeholder = "Enter new allergy" autocomplete="off">
+                </div>
+                <div class = "form-group" style = "padding-bottom: 10px;">
+                    <label for = "Surgery"> Surgery </label>
+                    <input class = "form-control" name = "surgery" id = "surgery" placeholder = "Enter new surgery" autocomplete="off">
+                </div>
+                <button class = "btn btn-primary" id = "new-history-btn"> Update </button>
+            </form>
+        </div>
+        <div id = "new-bill" style = "width: 1000px; margin: auto;">
+            <h2> Create Bill </h2>
+            <form id = "new-bill-form" style = "max-width: 1000px;">
+                <div class = "form-group">
+                    <label for = "Amount"> Amount </label>
+                    <input class = "form-control" name = "Amount" id = "Amount" placeholder = "Enter amount" autocomplete="off">
+                </div>
+                <button class = "btn btn-primary" id = "new-bill-btn" style = "margin-top: 10px;"> Create And Clear Assignment </button>
+            </form>
+        </div>
     </div>
 </body>
 <!-- bootstrap js -->
