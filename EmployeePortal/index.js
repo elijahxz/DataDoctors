@@ -30,6 +30,15 @@ $(document).ready(function()
         }, 30000)
     }
 
+    $("#start-date").datepicker({
+        dateFormat: 'yy-mm-dd',
+        maxDate: new Date,
+        changeDay: true, 
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1800:2023"
+    });
+
     $("#create-employee-btn").on('click', function(e) 
     {
 
@@ -50,7 +59,7 @@ $(document).ready(function()
         // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
-            url: 'php/sql.php',
+            url: '../php/sql.php',
             dataType: 'json',
             data: {functionname: 'create_new_employee', arguments: items},
             success: function (obj, textstatus) {
