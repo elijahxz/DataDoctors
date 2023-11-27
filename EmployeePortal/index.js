@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-    var cur_row;
     var employee = getCookie("Emp_id");
     
     // Takes the user back to the previous page with an invalid cookie
@@ -22,9 +21,11 @@ $(document).ready(function()
         get_employee_data();
         get_patient_queue();
         get_open_employees();
+        get_all_employees();
         
         // Update the page every 30 seconds. 
         setInterval(function(){
+            get_all_employees();
             get_patient_queue();
             get_open_employees();
         }, 30000)
@@ -88,7 +89,6 @@ $(document).ready(function()
             $(this).removeClass("table-success");
             $("#non-appointment-div").hide();
             $("#appointment-div").hide();
-            cur_row = undefined;
             return;
         }
         else if (app_flg == "Patients")
@@ -108,13 +108,68 @@ $(document).ready(function()
 
         $(this).addClass('table-success').siblings().removeClass('table-success');
     });
+
+    // This controls the all employee table Table, it is selectable. 
+    // To remove an employee from the hospital staff, the admin has to click the table.
+    $("#every-employee-table").on('click', 'tbody tr', function(event) {
+        
+        // Table looks like   0     1      2     3       4         5            6       7
+        //                  [Eid, Fname, Lname, Ssn, Emp Type, Departmnet, Start Date, Pay];
+        var app_flg = $(this).children().get(0).innerText;
+            console.log(app_flg);
+        if($(this).hasClass("table-success") == true)
+        {
+            $(this).removeClass("table-success");
+            //$("#non-appointment-div").hide();
+            //$("#appointment-div").hide();
+            $("#delete-employee-btn").hide();
+            return;
+        }
+        $("#delete-employee-btn").show();
+        $(this).addClass('table-success').siblings().removeClass('table-success');
+    });
+
+    $("#delete-employee-btn").on('click', function(event) {
+        var employee_selected = $("#every-employee-body .table-success").children();
+        var emp_id = employee_selected[0].innerText;
+        console.log(emp_id);
+        console.log(employee_selected);
+
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'delete_employee', arguments: [emp_id]},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            if(obj.result != false)
+                            {
+                                alert("Success!");
+                                console.log(obj.result);
+                            }
+                            else
+                            {
+                                alert("Failed to delete employee because employee has current appointments today.");
+                                console.log(obj.result);
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+        }).fail(function (jqXHR, textStatus, error) {
+            console.log(jqXHR.responseText);
+            return;
+        });
+    });
    
     // This will get the attributes of the selected column and attempt to remove the element from the queue table.
     $("#remove-queue-btn").on('click', function(e){
         console.log("in here"); 
         var items = [];
 
-        var patient_selected = $(".table-success").children();
+        var patient_selected = $("#patient-queue-body .table-success").children();
         var employee = $("#appointment-info-body tr").children();
 
 
@@ -197,6 +252,43 @@ $(document).ready(function()
     {
         $("#welcome").html("Welcome " + data.Fname + " " + data.Lname + "!");
     } 
+
+    function get_all_employees()
+    {
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'get_all_employees', arguments: []},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            $("#every-employee-body").empty();
+
+                            for (var i = 0; i < obj.result.length; i++){
+                                var employee_i = obj.result[i];
+                                $("#every-employee-body").append("<tr style = 'user-select: none;'>"+
+                                "<th scope='row' name = 'ssn'>"+employee_i[0] + "</th>" +
+                                "<td>"+ employee_i[2] + "</td>" +
+                                "<td>"+ employee_i[3] + "</td>" +
+                                "<td>"+ employee_i[4] + "</td>" +
+                                "<td>"+ employee_i[5] + "</td>" +
+                                "<td>"+ employee_i[6] + "</td>" +
+                                "<td>"+ employee_i[7] + "</td>" +
+                                "<td>"+ employee_i[8] + "</td>" +
+                                "</tr>");
+                            }
+                            console.log(obj.result);
+                        }
+                        else {
+                            console.log(obj.error);
+                            return;
+                        }
+                    }
+        }).fail(function (jqXHR, textStatus, error) {
+            console.log(jqXHR.responseText);
+            return;
+        });
+    }
 
     function get_patient_queue()
     {
@@ -449,4 +541,3 @@ $(document).ready(function()
         return "";
     }
 });
-

@@ -10,12 +10,12 @@ def usage():
     print("\tIe: python %s root myPassword1 datadoctors" % (sys.argv[0]))
     print("\tNote: This script assumes you will be using localhost")
 
-def connect_to_database(port, user, password, database):
+def connect_to_database(port, user, database):
     try:
         mydb = mysql.connector.connect(
             host = '127.0.0.1',
             port = port,
-            password = password,
+            password = None,
             user = user,
             database = database
         )
@@ -33,11 +33,11 @@ def fetch_existing_data():
         print("Error fetching existing data:", err)
         return []
     
-if len(sys.argv) != 5: 
+if len(sys.argv) != 4: 
     usage()
     exit(1)
 # Setup the database connection
-mydb = connect_to_database(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+mydb = connect_to_database(sys.argv[1], sys.argv[2], sys.argv[3])
 
 # Setup a cursor
 mycursor = mydb.cursor()

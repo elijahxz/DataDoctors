@@ -433,9 +433,6 @@
         {
             return false;
         }
-
-        return false;
-        
     }
 
     function insert_new_history($ssn, $allergy, $surgery)
@@ -492,6 +489,36 @@
         {
             CloseDB($conn);
             return false;
+        }
+        return true;
+    }
+
+    function get_all_employees()
+    {
+        $resultArray = array();
+        $conn = OpenDB("3308");
+        $result = $conn -> query("SELECT * FROM EMPLOYEE");
+        while ($row = $result->fetch_row()) {
+            $resultArray[] = $row;
+        }
+        CloseDB($conn);
+        return $resultArray;
+    }
+
+    function delete_employee($eid)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("DELETE FROM EMPLOYEE WHERE Emp_id = ?"); 
+
+            $stmt->bind_param("s", $eid);
+        
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return $e;
         }
         return true;
     }
@@ -653,7 +680,21 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
-
+            
+            case 'get_all_employees':
+                $aResult['result'] = get_all_employees();
+                break;
+            
+            case 'delete_employee':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = delete_employee($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
 
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
