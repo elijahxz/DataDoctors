@@ -29,6 +29,52 @@ $(document).ready(function()
             get_open_employees();
         }, 30000)
     }
+
+    $("#create-employee-btn").on('click', function(e) 
+    {
+
+        $("#new-employee").toggle();
+    });
+
+    $("#create-new-employee").on('click', function(e){
+        e.preventDefault();
+        
+        var items = [];
+        var data = $("#new-employee-form").serializeArray();
+
+        for (var i = 0; i < data.length; i++)
+        {
+            items.push(data[i].value); 
+        }
+
+        // Ajax call is what talks to PHP
+        jQuery.ajax({
+            type: "POST",
+            url: 'php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'create_new_employee', arguments: items},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            console.log(obj.result);
+                            if(obj.result)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                alert("There was an error creating your account, please try again or contact administration.");  
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+        }).fail(function (jqXHR, textStatus, error) {
+            console.log(jqXHR.responseText);
+            return;
+        });
+    });
     
     // This controlls the Current Patient Queue Table, it is selectable. 
     // To remove a patient from the queue, the user has to click the table.

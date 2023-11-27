@@ -117,6 +117,26 @@
 
         return true;
     } 
+    function create_new_employee($args)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("INSERT INTO PATIENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            $stmt->bind_param("sssssssssi", $args[0], $args[1], $arg[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
+
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+
+        CloseDB($conn);
+
+        return true;
+    } 
     // Inserts a patient into the queue 
     function insert_patientqueue($conn, $ssn, $appointment, $symptoms)
     {
@@ -498,6 +518,16 @@
                     $aResult['error'] = check_arguments($_POST, 4);
                 }
                 break;
+            case 'create_new_employee':
+                if (check_arguments($_POST, 9) == True)
+                {
+                    // Since there are ten arguments, just pass in the list 
+                    $aResult['result'] = create_new_employee($_POST['arguments']);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 9);
+                }
             case 'create_patient':
                 if (check_arguments($_POST, 11) == True)
                 {

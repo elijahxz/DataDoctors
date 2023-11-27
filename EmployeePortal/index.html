@@ -16,9 +16,10 @@
 	<div id = "bodyholder">
         <div style = "max-width: 750px;; margin: auto; padding-top: 30px;">
             <h3 id = "welcome"> </h3>
-        <div>
+        </div>
+
         <div style = "width: 750px;; margin: auto; padding-top: 10px;">
-            <table id = "employee-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;;">
+            <table id = "employee-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;">
                 <caption>Available Employees For Assignment</caption>
                 <thead>
                     <tr>
@@ -31,7 +32,55 @@
                 <tbody id = "employee-body">
                 </tbody>
             </table>
+            <button id = "create-employee-btn" class="btn btn-warning" style="width: 750px;"> Create Employee </button>
+
+        <!-- new-employee-form -->
+        <div id = "new-employee" style = "display: none; width: 500px; margin: auto;">
+            <h2> Register & Check In </h2>
+            <form id = "new-employee-form" style = "max-width: 500px;">
+                <div class = "form-group">
+                    <label for = "Emp_id"> Employee ID </label>
+                    <input class = "form-control" maxlength = "255" name = "Emp_id" id = "Emp_id" placeholder = "Enter EMPLOYEE ID">
+                </div>
+                <div class = "form-group">
+                    <label for = "Pass"> Password </label>
+                    <input class = "form-control" maxlength = "255" name = "Pass" id = "Pass" placeholder = "Enter Password">
+                </div>
+                <div class = "form-group">
+                    <label for = "Fname"> First Name </label>
+                    <input class = "form-control" maxlength = "255" name = "Fname" id = "Fname" placeholder = "Enter First Name">
+                </div>
+                <div class = "form-group">
+                    <label for = "Lname"> Last Name </label>
+                    <input class = "form-control" maxlength = "255" name = "Lname" id = "Lname" placeholder = "Enter Last Name">
+                </div>
+                <div class = "form-group">
+                    <label for = "Ssn"> SSN </label>
+                    <input class = "form-control" maxlength = "255" name = "Ssn" id = "Ssn" placeholder = "Enter SSN">
+                </div>
+                <div class = "form-group">
+                    <label for = "Emp-Type"> Employee Type </label>
+                    <input class = "form-control" maxlength = "255" name = "Emp-Type" id = "Emp-Type" placeholder = "Enter Employee Type">
+                </div>
+                <div class = "form-group">
+                    <label for = "Departement"> Departement </label>
+                    <input class = "form-control" maxlength = "255" name = "Departement" id = "Departement" placeholder = "Enter Departement">
+                </div>
+                <div class = "form-group">
+                    <label for = "start-date"> Start Date </label>
+                    <input class = "form-control" type="date" maxlength = "255" name = "start-date" id = "start-date">
+                </div>
+                <div class = "form-group">
+                    <label for = "Pay"> Pay ($ a year) </label>
+                    <input type="number" class = "form-control" maxlength = "255" name = "Pay" id = "Pay" placeholder = "Enter Pay">
+                </div>
+                
+                <button class = "btn btn-primary mt-3" id = "create-new-employee"> Register & Check In </button>
+            </form>
         </div>
+        </div>
+
+        
 
         <div style = "width: 750px; margin: auto; padding-top: 10px;">
             <table id = "patient-queue-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;">
@@ -86,6 +135,7 @@
 
 <!-- Google's jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- Link to the javascript file used for our page -->
 <script src="index.js"></script>
