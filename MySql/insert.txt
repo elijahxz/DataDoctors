@@ -15,15 +15,15 @@ Dnum, Dname
 6, Cardiology
 
 EMPLOYEE
-Emp_id, Pass, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay
-00000001, test, Ques, Johnson, 123121234, Admin, 1, 2002-11-01, 300000.00
-00000002, test, John, Smith, 543219876, Doctor, 2, 2002-11-01, 150212.52
-00000003, test, Sarah, Jones, 123456789, Nurse, 2, 2005-04-04, 70567.34
-00000004, test, Michael, Brown, 987654321, Janitor, 3, 2010-08-15, 40000.00
-00000005, test, Emily, Davis, 654321987, Nurse, 4, 2015-02-22, 60000.00
-00000006, test, Robert, Taylor, 456789012, Doctor, 6, 2018-07-10, 180000.00
-00000007, test, Olivia, Wilson, 789012345, Nurse, 4, 2020-01-05, 75000.00
-00000008, test, Ethan, Martin, 567890123, Doctor, 5, 2022-04-30, 160000.00
+Pass, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay
+test, Ques, Johnson, 123121234, Admin, 1, 2002-11-01, 300000.00
+test, John, Smith, 543219876, Doctor, 2, 2002-11-01, 150212.52
+test, Sarah, Jones, 123456789, Nurse, 2, 2005-04-04, 70567.34
+test, Michael, Brown, 987654321, Janitor, 3, 2010-08-15, 40000.00
+test, Emily, Davis, 654321987, Nurse, 4, 2015-02-22, 60000.00
+test, Robert, Taylor, 456789012, Doctor, 6, 2018-07-10, 180000.00
+test, Olivia, Wilson, 789012345, Nurse, 4, 2020-01-05, 75000.00
+test, Ethan, Martin, 567890123, Doctor, 5, 2022-04-30, 160000.00
 
 PATIENT
 Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
@@ -56,9 +56,9 @@ Pssn, Allergies, Surgeries
 555443333, NULL, Wisdom Teeth Removal
 
 BILLING
-Tran_id, Pssn, Amount, Paid
-000001, 999887777, 10233.90, 0
-000002, 888776666, 430.22, 1
-000003, 777665555, 1200.02, 0
-000004, 666554444, 15592.33, 0
-000005, 555443333, 20000.00, 1
+Pssn, Amount, Paid
+999887777, 10233.90, 0
+888776666, 430.22, 1
+777665555, 1200.02, 0
+666554444, 15592.33, 0
+555443333, 20000.00, 1
