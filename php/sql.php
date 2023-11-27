@@ -123,7 +123,11 @@
         try{
             $stmt = $conn -> prepare("INSERT INTO EMPLOYEE VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
+<<<<<<< HEAD
             $stmt->bind_param("ssssssss", $args[0], $args[1], $arg[2], $args[3], $args[4], $args[5], $args[6], $args[7]);
+=======
+            $stmt->bind_param("sssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
+>>>>>>> a593b0665e6abb5aa5a2b491b375d705109616f3
 
             $stmt->execute();
         }
@@ -433,9 +437,6 @@
         {
             return false;
         }
-
-        return false;
-        
     }
 
     function insert_new_history($ssn, $allergy, $surgery)
@@ -492,6 +493,36 @@
         {
             CloseDB($conn);
             return false;
+        }
+        return true;
+    }
+
+    function get_all_employees()
+    {
+        $resultArray = array();
+        $conn = OpenDB("3308");
+        $result = $conn -> query("SELECT * FROM EMPLOYEE");
+        while ($row = $result->fetch_row()) {
+            $resultArray[] = $row;
+        }
+        CloseDB($conn);
+        return $resultArray;
+    }
+
+    function delete_employee($eid)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("DELETE FROM EMPLOYEE WHERE Emp_id = ?"); 
+
+            $stmt->bind_param("s", $eid);
+        
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return $e;
         }
         return true;
     }
@@ -653,7 +684,21 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
-
+            
+            case 'get_all_employees':
+                $aResult['result'] = get_all_employees();
+                break;
+            
+            case 'delete_employee':
+                if (check_arguments($_POST, 1) == True)
+                {
+                    $aResult['result'] = delete_employee($_POST['arguments'][0]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 1);
+                }
+                break;
 
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
