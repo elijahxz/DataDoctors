@@ -123,7 +123,7 @@
         try{
             $stmt = $conn -> prepare("INSERT INTO PATIENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            $stmt->bind_param("sssssssssi", $args[0], $args[1], $arg[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
+            $stmt->bind_param("sssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
 
             $stmt->execute();
         }
