@@ -22,7 +22,7 @@ $(document).ready(function()
         window.location.href = ($(location).attr('href') + "StaffLogin");
     });
     
-    $("#check-in").on('click', function(e) 
+    $("#check-in").on('click', function(e)
     {
         $(".question").show();
     });

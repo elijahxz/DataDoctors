@@ -121,13 +121,9 @@
     {
         $conn = OpenDb("3308");
         try{
-            $stmt = $conn -> prepare("INSERT INTO EMPLOYEE VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn -> prepare("INSERT INTO PATIENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-<<<<<<< HEAD
-            $stmt->bind_param("ssssssss", $args[0], $args[1], $arg[2], $args[3], $args[4], $args[5], $args[6], $args[7]);
-=======
             $stmt->bind_param("sssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
->>>>>>> a593b0665e6abb5aa5a2b491b375d705109616f3
 
             $stmt->execute();
         }
@@ -550,14 +546,14 @@
                 }
                 break;
             case 'create_new_employee':
-                if (check_arguments($_POST, 8) == True)
+                if (check_arguments($_POST, 9) == True)
                 {
                     // Since there are ten arguments, just pass in the list 
                     $aResult['result'] = create_new_employee($_POST['arguments']);
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 8);
+                    $aResult['error'] = check_arguments($_POST, 9);
                 }
             case 'create_patient':
                 if (check_arguments($_POST, 11) == True)
