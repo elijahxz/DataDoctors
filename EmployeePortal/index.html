@@ -11,6 +11,7 @@
     </div>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
 </head>
 <body class="bg-secondary">
 	<div id = "bodyholder">
@@ -32,56 +33,8 @@
                 <tbody id = "employee-body">
                 </tbody>
             </table>
-            <button id = "create-employee-btn" class="btn btn-warning" style="width: 750px;"> Create Employee </button>
-
-        <!-- new-employee-form -->
-        <div id = "new-employee" style = "display: none; width: 500px; margin: auto;">
-            <h2> Register & Check In </h2>
-            <form id = "new-employee-form" style = "max-width: 500px;">
-                <div class = "form-group">
-                    <label for = "Emp_id"> Employee ID </label>
-                    <input class = "form-control" maxlength = "255" name = "Emp_id" id = "Emp_id" placeholder = "Enter EMPLOYEE ID">
-                </div>
-                <div class = "form-group">
-                    <label for = "Pass"> Password </label>
-                    <input class = "form-control" maxlength = "255" name = "Pass" id = "Pass" placeholder = "Enter Password">
-                </div>
-                <div class = "form-group">
-                    <label for = "Fname"> First Name </label>
-                    <input class = "form-control" maxlength = "255" name = "Fname" id = "Fname" placeholder = "Enter First Name">
-                </div>
-                <div class = "form-group">
-                    <label for = "Lname"> Last Name </label>
-                    <input class = "form-control" maxlength = "255" name = "Lname" id = "Lname" placeholder = "Enter Last Name">
-                </div>
-                <div class = "form-group">
-                    <label for = "Ssn"> SSN </label>
-                    <input class = "form-control" maxlength = "255" name = "Ssn" id = "Ssn" placeholder = "Enter SSN">
-                </div>
-                <div class = "form-group">
-                    <label for = "Emp-Type"> Employee Type </label>
-                    <input class = "form-control" maxlength = "255" name = "Emp-Type" id = "Emp-Type" placeholder = "Enter Employee Type">
-                </div>
-                <div class = "form-group">
-                    <label for = "Departement"> Departement </label>
-                    <input class = "form-control" maxlength = "255" name = "Departement" id = "Departement" placeholder = "Enter Departement">
-                </div>
-                <div class = "form-group">
-                    <label for = "start-date"> Start Date </label>
-                    <input class = "form-control" type="date" maxlength = "255" name = "start-date" id = "start-date">
-                </div>
-                <div class = "form-group">
-                    <label for = "Pay"> Pay ($ a year) </label>
-                    <input type="number" class = "form-control" maxlength = "255" name = "Pay" id = "Pay" placeholder = "Enter Pay">
-                </div>
-                
-                <button class = "btn btn-primary mt-3" id = "create-new-employee"> Register & Check In </button>
-            </form>
         </div>
-        </div>
-
         
-
         <div style = "width: 750px; margin: auto; padding-top: 10px;">
             <table id = "patient-queue-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;">
                 <caption>Current Patient Queue</caption>
@@ -115,7 +68,9 @@
             </table>
             <button id = "remove-queue-btn" class = "btn btn-primary" style = "float: right;"> Assign & Remove </button>
         </div>
-        <div style = "width: 750px;; margin: auto; padding-top: 10px; display: none;" id = "non-appointment-div">
+        
+       
+        <div style = "width: 750px; margin: auto; padding-top: 10px; display: none;" id = "non-appointment-div">
             <h4> Assign Doctor and Remove From Queue</h4>
             <form id = "update-non-appointment-patient" style = "max-width: 750px;;">
                 <div class = "form-group" style = "padding-bottom: 10px;">
@@ -127,6 +82,7 @@
             </form>
         </div>
 
+    
         <div style = "width: 750px;; margin: auto; padding-top: 10px;">
             <table id = "every-employee-table" class="table table-dark table-hover caption-top" style = "max-width: 750px;;">
                 <caption>All Employees in Company</caption>
@@ -147,6 +103,51 @@
             </table>
             <button class = "btn btn-primary" id = "delete-employee-btn" style = "display: none;"> Delete Employee </button>
         </div>
+        
+        <div style = "width: 750px; margin: auto; padding-top: 10px; padding-bottom: 10px;">
+            <button id = "create-employee-btn" class="btn btn-warning" style="width: 750px;"> Create Employee </button>
+        </div>    
+        
+        <!-- new-employee-form -->
+        <div id = "new-employee" style = "display: none; width: 500px; margin: auto; padding-bottom: 10px;">
+            <h2> Register & Check In </h2>
+            <form id = "new-employee-form" style = "max-width: 500px;">
+                <div class = "form-group">
+                    <label for = "Pass"> Password </label>
+                    <input class = "form-control" maxlength = "255" name = "Pass" id = "Pass" placeholder = "Enter Password">
+                </div>
+                <div class = "form-group">
+                    <label for = "Fname"> First Name </label>
+                    <input class = "form-control" maxlength = "255" name = "Fname" id = "Fname" placeholder = "Enter First Name">
+                </div>
+                <div class = "form-group">
+                    <label for = "Lname"> Last Name </label>
+                    <input class = "form-control" maxlength = "255" name = "Lname" id = "Lname" placeholder = "Enter Last Name">
+                </div>
+                <div class = "form-group">
+                    <label for = "Ssn"> SSN </label>
+                    <input class = "form-control" maxlength = "255" name = "Ssn" id = "Ssn" placeholder = "Enter SSN">
+                </div>
+                <div class = "form-group">
+                    <label for = "Emp-Type"> Employee Type </label>
+                    <input class = "form-control" maxlength = "255" name = "Emp-Type" id = "Emp-Type" placeholder = "Enter Employee Type">
+                </div>
+                <div class = "form-group">
+                    <label for = "Departement"> Departement </label>
+                    <input class = "form-control" maxlength = "255" name = "Departement" id = "Departement" placeholder = "Enter Departement">
+                </div>
+                <div class = "form-group">
+                    <label for = "start-date"> Start Date </label>
+                    <input class = "form-control" name = "start-date" id = "start-date" placeholder = "Enter Date (yyyy-mm-dd)">
+                </div>
+                <div class = "form-group">
+                    <label for = "Pay"> Pay ($ a year) </label>
+                    <input type="number" class = "form-control" maxlength = "255" name = "Pay" id = "Pay" placeholder = "Enter Pay">
+                </div>
+                
+                <button class = "btn btn-primary mt-3" id = "create-new-employee"> Register & Check In </button>
+            </form>
+        </div>
 
     </div>
 </body>
@@ -156,7 +157,7 @@
 
 <!-- Google's jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script> 
 
 <!-- Link to the javascript file used for our page -->
 <script src="index.js"></script>

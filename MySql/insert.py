@@ -2,13 +2,12 @@ import mysql.connector
 import sys
 
 def usage():
-    print("Usage: python %s <port> <user> <password> <database name>" % (sys.argv[0]))
+    print("Usage: python %s <port> <user> <database name>" % (sys.argv[0]))
     print("\t<port>: Port to access the local mysql server (for default port use 3306)")
     print("\t<user>: Can be root or another user set up in your sql database")
-    print("\t<password>: Account password used to get into mysql")
     print("\t<database name>: Name of database being accessed")
-    print("\tIe: python %s root myPassword1 datadoctors" % (sys.argv[0]))
-    print("\tNote: This script assumes you will be using localhost")
+    print("\tIe: python %s root datadoctors" % (sys.argv[0]))
+    print("\tNote: This script assumes you will be using localhost, with no password")
 
 def connect_to_database(port, user, database):
     try:

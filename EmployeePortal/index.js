@@ -2,6 +2,16 @@ $(document).ready(function()
 {
     var employee = getCookie("Emp_id");
     
+    // Datepicker for the date of birth stuff
+    $("#start-date").datepicker({
+        dateFormat: 'yy-mm-dd',
+        maxDate: new Date,
+        changeDay: true, 
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1800:2023"
+    });
+   
     // Takes the user back to the previous page with an invalid cookie
     if (employee == "")
     {  
@@ -47,23 +57,25 @@ $(document).ready(function()
         {
             items.push(data[i].value); 
         }
-
+        console.log(items);
         // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
-            url: 'php/sql.php',
+            url: '../php/sql.php',
             dataType: 'json',
             data: {functionname: 'create_new_employee', arguments: items},
             success: function (obj, textstatus) {
                         if( !('error' in obj) ) {
-                            console.log(obj.result);
-                            if(obj.result)
+                            console.log(obj);
+                            if(obj.result != false)
                             {
+                                alert("Success!");
                                 return;
                             }
                             else
                             {
-                                alert("There was an error creating your account, please try again or contact administration.");  
+                                alert("There was an error creating the new employee account, please check and try again");
+                                return;
                             }
                         }
                         else {

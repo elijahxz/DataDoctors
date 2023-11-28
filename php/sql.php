@@ -120,10 +120,29 @@
     function create_new_employee($args)
     {
         $conn = OpenDb("3308");
-        try{
-            $stmt = $conn -> prepare("INSERT INTO PATIENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        
 
-            $stmt->bind_param("sssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8]);
+        // First, check if the user exists in the patient table 
+        $stmt = $conn -> prepare("SELECT * FROM EMPLOYEE WHERE Ssn=?");
+
+        $stmt->bind_param("s", $args[3]);
+
+        $stmt->execute();
+
+        $result = $stmt -> get_result();
+        
+        // If there is already and employee with the existing ssn, fail.
+        if($result -> num_rows != 0)
+        {
+            return false;
+        } 
+        
+        
+        try{
+            $stmt = $conn -> prepare("INSERT INTO EMPLOYEE (Pass, Fname, Lname, Ssn, Emp_Type, Department, Start_date, Pay) " . 
+                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+            $stmt->bind_param("ssssssss", $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7]);
 
             $stmt->execute();
         }
@@ -546,15 +565,16 @@
                 }
                 break;
             case 'create_new_employee':
-                if (check_arguments($_POST, 9) == True)
+                if (check_arguments($_POST, 8) == True)
                 {
                     // Since there are ten arguments, just pass in the list 
                     $aResult['result'] = create_new_employee($_POST['arguments']);
                 }
                 else
                 {
-                    $aResult['error'] = check_arguments($_POST, 9);
+                    $aResult['error'] = check_arguments($_POST, 8);
                 }
+                break;
             case 'create_patient':
                 if (check_arguments($_POST, 11) == True)
                 {
