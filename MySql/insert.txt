@@ -34,12 +34,12 @@ Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
 555443333, Liam, Blue, 6153339876, 1975-02-28, liam.blue@email.com, 987 Pine Ln, Murfreesboro, TN, 37032
 
 APPOINTMENTS
-App_id, Date_time, Symptoms, Pssn, Emp_id, Department
-00000001, 2023-12-10 13:30:00, Broken Leg, 999887777, 00000002, 2
-00000002, 2023-12-11 09:45:00, Fever, 888776666, 00000003, 4
-00000003, 2023-12-13 14:15:00, Chest Pain, 777665555, 00000007, 5
-00000004, 2023-12-13 10:30:00, Headache, 666554444, 00000005, 6
-00000005, 2023-12-14 11:00:00, Sore Throat, 555443333, 00000006, 3
+Date_time, Symptoms, Pssn, Emp_id, Department
+2023-12-10 13:30:00, Broken Leg, 999887777, 00000002, 2
+2023-12-11 09:45:00, Fever, 888776666, 00000003, 4
+2023-12-13 14:15:00, Chest Pain, 777665555, 00000007, 5
+2023-12-13 10:30:00, Headache, 666554444, 00000005, 6
+2023-12-14 11:00:00, Sore Throat, 555443333, 00000006, 3
 
 PATIENTQUEUE
 Pssn, App_flg, Check_in, Symptoms
