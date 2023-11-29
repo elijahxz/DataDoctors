@@ -144,9 +144,7 @@ $(document).ready(function()
     $("#delete-employee-btn").on('click', function(event) {
         var employee_selected = $("#every-employee-body .table-success").children();
         var emp_id = employee_selected[0].innerText;
-        console.log(emp_id);
-        console.log(employee_selected);
-
+        
         jQuery.ajax({
             type: "POST",
             url: '../php/sql.php',
@@ -157,12 +155,10 @@ $(document).ready(function()
                             if(obj.result != false)
                             {
                                 alert("Success!");
-                                console.log(obj.result);
                             }
                             else
                             {
-                                alert("Failed to delete employee because employee has current appointments today.");
-                                console.log(obj.result);
+                                alert("Failed to delete employee because employee is either seeing a patient or has upcomming appointments.");
                             }
                         }
                         else {
