@@ -145,6 +145,12 @@ $(document).ready(function()
         var employee_selected = $("#every-employee-body .table-success").children();
         var emp_id = employee_selected[0].innerText;
         
+        if (emp_id == employee)
+        {
+            alert("Error: you can not delete yourself from the employee table!");
+            return;
+        }
+
         jQuery.ajax({
             type: "POST",
             url: '../php/sql.php',
@@ -154,6 +160,7 @@ $(document).ready(function()
                         if( !('error' in obj) ) {
                             if(obj.result != false)
                             {
+                                get_all_employees();
                                 alert("Success!");
                             }
                             else
@@ -201,7 +208,6 @@ $(document).ready(function()
     
     $("#update-non-appointment-btn").on('click', function(e){
         e.preventDefault();
-        console.log("in here"); 
         var items = [];
 
         var patient_selected = $(".table-success").children();

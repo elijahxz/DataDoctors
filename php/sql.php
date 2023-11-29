@@ -526,9 +526,6 @@
 
     function delete_employee($eid)
     {
-        
-        
-        
         $conn = OpenDb("3308");
         try{
             $stmt = $conn -> prepare("DELETE FROM EMPLOYEE WHERE Emp_id = ?"); 
