@@ -731,7 +731,6 @@
             
             case 'delete_employee':
                 if (check_arguments($_POST, 1) == True)
-                    $aResult['result'] = delete_employee($_POST['arguments'][0]);
                 {
                     $aResult['result'] = delete_employee($_POST['arguments'][0]);
                 }
