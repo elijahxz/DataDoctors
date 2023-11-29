@@ -107,17 +107,17 @@
         <div style = "width: 750px; margin: auto; padding-top: 10px; padding-bottom: 10px;">
             <div class="row">
                 <div class="col-6 d-grid">
-                <button id = "create-employee-btn " class="btn btn-warning"> Create Employee </button>
+                <button id = "create-employee-btn" class="btn btn-warning"> Create Employee </button>
                 </div>
                 <div class="col-6 d-grid">
-                    <button id = >Create Appointment</button>
+                    <button id = "create-appointment-btn" class="btn btn-success" >Create Appointment</button>
                 </div>
             </div>
         </div>    
         
         <!-- new-employee-form -->
         <div id = "new-employee" style = "display: none; width: 500px; margin: auto; padding-bottom: 10px;">
-            <h2> Register & Check In </h2>
+            <h2 class="text-center"> Create New Employee </h2>
             <form id = "new-employee-form" style = "max-width: 500px;">
                 <div class = "form-group">
                     <label for = "Pass"> Password </label>
@@ -153,6 +153,34 @@
                 </div>
                 
                 <button class = "btn btn-primary mt-3" id = "create-new-employee"> Register & Check In </button>
+            </form>
+        </div>
+
+        <!-- new-appointment-form -->
+        <div id = "new-appointment" style = "display: none; width: 500px; margin: auto; padding-bottom: 10px;">
+            <h2 class="text-center"> Create new Appointment </h2>
+            <form id = "new-appointment-form" style = "max-width: 500px;">
+                <div class = "form-group">
+                    <label for = "date-time"> Date of Appointment </label>
+                    <input class = "form-control" name = "date-time" id = "date-time" placeholder = "Enter Date (yyyy-mm-dd)">
+                </div>
+                <div class = "form-group">
+                    <label for = "Symptoms"> Symptoms </label>
+                    <input class = "form-control" maxlength = "255" name = "Symptoms" id = "Symptoms" placeholder = "Enter your symptoms">
+                </div>
+                <div class = "form-group">
+                    <label for = "Pssn"> Patient SSN </label>
+                    <input class = "form-control" maxlength = "255" name = "Pssn" id = "Pssn" placeholder = "Enter Social Security Number">
+                </div>
+                <div class = "form-group">
+                    <label for = "Emp-id"> Employee id </label>
+                    <input class = "form-control" maxlength = "255" name = "Emp-id" id = "Emp-id" placeholder = "Enter Employee ID">
+                </div>
+                <div class = "form-group">
+                    <label for = "Department"> Department </label>
+                    <input class = "form-control" maxlength = "255" name = "Department" id = "Department" placeholder = "Enter Department">
+                </div>
+                <button class = "btn btn-primary mt-3" id = "create-new-appointment"> Create Appointment </button>
             </form>
         </div>
 

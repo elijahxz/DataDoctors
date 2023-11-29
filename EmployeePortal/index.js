@@ -3,7 +3,7 @@ $(document).ready(function()
     var employee = getCookie("Emp_id");
     
     // Datepicker for the date of birth stuff
-    $("#start-date").datepicker({
+    $("#start-date, #date-time").datepicker({
         dateFormat: 'yy-mm-dd',
         maxDate: new Date,
         changeDay: true, 
@@ -43,9 +43,28 @@ $(document).ready(function()
 
     $("#create-employee-btn").on('click', function(e) 
     {
-
-        $("#new-employee").toggle();
+        if($("#new-employee").is(":visible"))
+        {
+            $("#new-employee").hide();
+        }
+        else{
+            $("#new-employee").show();
+        }
+        $("#new-appointment").hide();
     });
+
+    $("#create-appointment-btn").on('click', function(e)
+    {
+        if($("#new-appointment").is(":visible"))
+        {
+            $("#new-appointment").hide();
+        }
+        else{
+            $("#new-appointment").show();
+        }
+        $("#new-employee").hide();
+    });
+    
 
     $("#create-new-employee").on('click', function(e){
         e.preventDefault();
@@ -64,6 +83,48 @@ $(document).ready(function()
             url: '../php/sql.php',
             dataType: 'json',
             data: {functionname: 'create_new_employee', arguments: items},
+            success: function (obj, textstatus) {
+                        if( !('error' in obj) ) {
+                            console.log(obj);
+                            if(obj.result != false)
+                            {
+                                alert("Success!");
+                                return;
+                            }
+                            else
+                            {
+                                alert("There was an error creating the new employee account, please check and try again");
+                                return;
+                            }
+                        }
+                        else {
+                              console.log(obj.error);
+                              return;
+                        }
+                    }
+        }).fail(function (jqXHR, textStatus, error) {
+            console.log(jqXHR.responseText);
+            return;
+        });
+    });
+
+    $("#create-new-appointment").on('click', function(e){
+        e.preventDefault();
+        
+        var items = [];
+        var data = $("#new-appointment-form").serializeArray();
+
+        for (var i = 0; i < data.length; i++)
+        {
+            items.push(data[i].value); 
+        }
+        console.log(items);
+        // Ajax call is what talks to PHP
+        jQuery.ajax({
+            type: "POST",
+            url: '../php/sql.php',
+            dataType: 'json',
+            data: {functionname: 'create_appointment', arguments: items},
             success: function (obj, textstatus) {
                         if( !('error' in obj) ) {
                             console.log(obj);
