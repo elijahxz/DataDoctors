@@ -541,6 +541,26 @@
         }
         return true;
     }
+   
+    function create_appointment($time, $symptoms, $pssn, $emp_id, $department)
+    {
+        $conn = OpenDb("3308");
+        try{
+            $stmt = $conn -> prepare("INSERT INTO APPOINTMENTS VALUES(?, ?, ?, ?, ?)");
+
+            $stmt->bind_param("sss", $time, $symptoms, $pssn, $emp_id, $department);
+
+            $stmt->execute();
+        }
+        catch (Exception $e)
+        {
+            CloseDB($conn);
+            return false;
+        }
+
+        return true;        
+    }
+
 
 
     // Start of global space
@@ -711,6 +731,7 @@
             
             case 'delete_employee':
                 if (check_arguments($_POST, 1) == True)
+                    $aResult['result'] = delete_employee($_POST['arguments'][0]);
                 {
                     $aResult['result'] = delete_employee($_POST['arguments'][0]);
                 }
@@ -719,6 +740,18 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+            
+            case 'create_appointment':
+                if (check_arguments($_POST, 5) == True)
+                {
+                    $aResult['result'] = create_appointment($_POST['arguments'][0], $_POST['arguments'][1], $_POST['arguments'][2], $_POST['arguments'][3], $_POST['arguments'][4]);
+                }
+                else
+                {
+                    $aResult['error'] = check_arguments($_POST, 5);
+                }
+                break;
+
 
             default:
                 $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
