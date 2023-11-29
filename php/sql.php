@@ -554,9 +554,7 @@
     if( !isset($aResult['error']) ) {
 
       switch($_POST['functionname']) {
-            //case 'DisplaySuppliers':
-            //    $aResult['result'] = DisplaySuppliers();
-            //    break;
+      
             case 'check_in':
                 if (check_arguments($_POST, 4) == True)
                 {
@@ -567,6 +565,7 @@
                     $aResult['error'] = check_arguments($_POST, 4);
                 }
                 break;
+
             case 'create_new_employee':
                 if (check_arguments($_POST, 8) == True)
                 {
@@ -578,6 +577,7 @@
                     $aResult['error'] = check_arguments($_POST, 8);
                 }
                 break;
+
             case 'create_patient':
                 if (check_arguments($_POST, 11) == True)
                 {
@@ -589,6 +589,7 @@
                     $aResult['error'] = check_arguments($_POST, 11);
                 }
                 break;
+
             case 'patient_portal':
                 if (check_arguments($_POST, 1) == True)
                 {
@@ -599,6 +600,7 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+
             case 'employee_login':
                 if (check_arguments($_POST, 2) == True)
                 {
@@ -609,6 +611,7 @@
                     $aResult['error'] = check_arguments($_POST, 2);
                 }
                 break;
+
             case 'employee_portal': 
                 if (check_arguments($_POST, 1) == True)
                 {
@@ -619,6 +622,7 @@
                     $aResult['error'] = check_arguments($_POST, 1);
                 }
                 break;
+
             case 'patient_queue':
                 $aResult['result'] = get_patient_queue();
                 break;
