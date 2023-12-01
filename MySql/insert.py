@@ -14,7 +14,7 @@ def connect_to_database(port, user, database):
         mydb = mysql.connector.connect(
             host = '127.0.0.1',
             port = port,
-            password = None,
+            password = "",
             user = user,
             database = database
         )
@@ -24,10 +24,23 @@ def connect_to_database(port, user, database):
     return mydb
 
 # Fetch existing data from the database
-def fetch_existing_data():
+def fetch_existing_data(table_name):
+    data = list()
     try:
-        mycursor.execute(f"SELECT * FROM {table_name}")
-        return mycursor.fetchall()
+        mycursor.execute("SELECT * FROM %s" % (table_name))
+
+        # Convert data into all strings, other than None values
+        for entry in mycursor.fetchall():
+            temp_list = list()
+            for i in entry:
+                if str(i) == 'None': 
+                    temp_list.append(None)
+                else:
+                    temp_list.append(str(i))
+            data.append(temp_list)
+
+        # Return the 2d list of strings
+        return data
     except mysql.connector.Error as err:
         print("Error fetching existing data:", err)
         return []
@@ -47,7 +60,7 @@ found_table = False;
 table_name = ""
 table_columns = ""
 sql = "Insert into %s (%s) VALUES ("
-existing_data = fetch_existing_data()
+existing_data = list()
 
 for line in file:
     # Check if a table was found, if a new one is found, next line is columns
@@ -75,6 +88,7 @@ for line in file:
             continue
         else:
             table_name = line.strip()
+            existing_data = fetch_existing_data(table_name)
             found_table = True
     # If we are here, the line should be values to insert into the table
     else: 
@@ -92,7 +106,19 @@ for line in file:
         # Convert the row values to a tuple
         values = tuple(row)
         
-        if values not in existing_data:
+        match = False
+        
+        # Check if we have data that does not exist in the database. 
+        for data in existing_data: 
+            if len(data) != len(row):
+                data = data[1:]
+                if len(data) != len(row):
+                    print("Error: mismatching data, unable to compare with what is in database")
+                    break;
+            if data == row: 
+                match = True
+
+        if not match:
             # Set up the sql statement
             sql_statement = sql % (table_name, table_columns)
             sql_statement += value_placeholder + ")"

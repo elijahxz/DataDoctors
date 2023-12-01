@@ -1,9 +1,6 @@
 HOSPITAL
 Id, Address, City, Zip_code, State, Phone
 1, 1301 E Main St, Murfreesboro, 37032, TN, 1235433333
-2, 742 Oak St, Nashville, 37211, TN, 6155551212
-3, 500 Maple Ave, Franklin, 37064, TN, 6155559876
-4, 123 Pine St, Brentwood, 37027, TN, 6155555555
 
 DEPARTMENT
 Dnum, Dname
@@ -35,11 +32,11 @@ Ssn, Fname, Lname, Phone, Dob, Email, Address, City, State, Zip_code
 
 APPOINTMENTS
 Date_time, Symptoms, Pssn, Emp_id, Department
-2023-12-10 13:30:00, Broken Leg, 999887777, 00000002, 2
-2023-12-11 09:45:00, Fever, 888776666, 00000003, 4
-2023-12-13 14:15:00, Chest Pain, 777665555, 00000007, 5
-2023-12-13 10:30:00, Headache, 666554444, 00000005, 6
-2023-12-14 11:00:00, Sore Throat, 555443333, 00000006, 3
+2023-12-10 13:30:00, Broken Leg, 999887777, 2, 2
+2023-12-11 09:45:00, Fever, 888776666, 3, 4
+2023-12-13 14:15:00, Chest Pain, 777665555, 7, 5
+2023-12-13 10:30:00, Headache, 666554444, 5, 6
+2023-12-14 11:00:00, Sore Throat, 555443333, 6, 3
 
 PATIENTQUEUE
 Pssn, App_flg, Check_in, Symptoms
