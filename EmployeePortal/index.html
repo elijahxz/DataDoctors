@@ -12,6 +12,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 </head>
 <body class="bg-secondary">
 	<div id = "bodyholder">
@@ -160,9 +161,13 @@
         <div id = "new-appointment" style = "display: none; width: 500px; margin: auto; padding-bottom: 10px;">
             <h2 class="text-center"> Create new Appointment </h2>
             <form id = "new-appointment-form" style = "max-width: 500px;">
-                <div class = "form-group">
+                <div class = "form-group" style = "display: inline-block; width: 245px;">
                     <label for = "date-time"> Date of Appointment </label>
                     <input class = "form-control" name = "date-time" id = "date-time" placeholder = "Enter Date (yyyy-mm-dd)">
+                </div>
+                <div class = "form-group"style = "display: inline-block; width: 245px;">
+                    <label for = "time"> Time of Appointment </label>
+                    <input class = "form-control" name = "time" id = "timepicker" placeholder = "Enter Time">
                 </div>
                 <div class = "form-group">
                     <label for = "Symptoms"> Symptoms </label>
@@ -194,6 +199,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script> 
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <!-- Link to the javascript file used for our page -->
 <script src="index.js"></script>
 

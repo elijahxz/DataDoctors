@@ -479,8 +479,8 @@
     {
         $conn = OpenDb("3308");
         try{
-            $stmt = $conn -> prepare("INSERT INTO BILLING " . 
-                                     "SELECT LPAD(MAX(Tran_id)+1, 6, '0'), ?, ?, '0' FROM BILLING");
+            $stmt = $conn -> prepare("INSERT INTO BILLING (Pssn, Amount, Paid) " . 
+                                     "VALUES(?, ?, '0')");
 
             $stmt->bind_param("ss", $ssn, $amount);
 
@@ -546,18 +546,19 @@
     {
         $conn = OpenDb("3308");
         try{
-            $stmt = $conn -> prepare("INSERT INTO APPOINTMENTS VALUES(?, ?, ?, ?, ?)");
+            $stmt = $conn -> prepare("INSERT INTO APPOINTMENTS(Date_time, Symptoms, Pssn, Emp_id, Department) VALUES(?, ?, ?, ?, ?)");
 
-            $stmt->bind_param("sss", $time, $symptoms, $pssn, $emp_id, $department);
+            $stmt->bind_param("sssss", $time, $symptoms, $pssn, $emp_id, $department);
 
             $stmt->execute();
         }
-        catch (Exception $e)
+        catch(Exception $e)
         {
             CloseDB($conn);
             return false;
         }
 
+        CloseDB($conn);
         return true;        
     }
 

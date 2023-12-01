@@ -11,7 +11,16 @@ $(document).ready(function()
         changeYear: true,
         yearRange: "1800:2023"
     });
-   
+   $('#timepicker').timepicker({
+        timeFormat: 'HH:mm:ss',
+        interval: 15,
+        minTime: '07:00:00', 
+        maxTime: '18:00:00',
+        defaultTime: '11:00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
     // Takes the user back to the previous page with an invalid cookie
     if (employee == "")
     {  
@@ -113,12 +122,21 @@ $(document).ready(function()
         
         var items = [];
         var data = $("#new-appointment-form").serializeArray();
-
-        for (var i = 0; i < data.length; i++)
+        items.push(data[0].value + " " + data[1].value)
+        for (var i = 2; i < data.length; i++)
         {
             items.push(data[i].value); 
         }
-        console.log(items);
+
+        for (var i = 0; i < items.length; i++)
+        {
+            if (items[i] == "")
+            {
+                alert("All fields must be inserted to create an appointment");
+                return;
+            }
+        }
+        
         // Ajax call is what talks to PHP
         jQuery.ajax({
             type: "POST",
