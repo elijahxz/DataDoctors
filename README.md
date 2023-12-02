@@ -10,7 +10,8 @@ Instructions:
 2. Download XAMPP from the web: https://www.apachefriends.org/download.html
 	
  	-Install **version 8.2.4**
-	-Our Application runs on port 3308, so follow these steps:
+	
+ 	-Our Application runs on port 3308, so follow these steps:
 		--Open XAMPP Control Panel
 		--On the MySQL row, Click Config -> my.ini
    		--Change the port from 3306 to 3308 and save the file
@@ -25,12 +26,18 @@ Instructions:
 	-Go to C://xampp/htdocs (for mac, applications/xampp/htdocs) and clone this repository in that folder
 
 5. Connect the XAMPP database instance to mysql workbench:
-	-Have apache and mysql running on xampp, open mysql and hit the + by MySQL Connections
-	-Set a connection name (ie: xamppserver)
-	-Go to the xampp control panel and find the mysql port number
-   	-Insert that number into the Port input on the mysql workbench
-   	-Click Test Connection, then click OK
-    -Open the new connection you just created
+	
+   -Have apache and mysql running on xampp, open mysql and hit the + by MySQL Connections
+	
+   -Set a connection name (ie: xamppserver)
+	
+   -Go to the xampp control panel and find the mysql port number
+
+   -Insert that number into the Port input on the mysql workbench
+
+   -Click Test Connection, then click OK
+
+   -Open the new connection you just created
 
     -Steps:
 		1. Open install.sql (xampp/htdocs/datadoctors/mysql) and uncomment the first line (--create database datadoctors;)
