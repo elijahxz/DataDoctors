@@ -48,7 +48,8 @@ Instructions:
         2. Run the install.sql script 
 	3. In your terminal, go to the cloned repository's MySql folder (xampp/htdocs/datadoctors/MySql)
     		run "python insert.py port username datadoctors"
-  		Note: Your username should be root. ie: python insert.py 3308 root datadoctors
+ 		Note: For insert.py you must install mysql-connector-python (pip install mysql-connector-python)
+  		      Your username should be root. ie: python insert.py 3308 root datadoctors
 
     After running these steps, datadoctors should be filled with tables and entries in the tables.
     To drop the tables in datadoctors, run drop.sql in SQL Workbench
