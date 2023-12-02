@@ -8,7 +8,8 @@ Instructions:
 	-Go through all steps in the installer
    
 2. Download XAMPP from the web: https://www.apachefriends.org/download.html
-	-Install **version 8.2.4**
+	
+ 	-Install **version 8.2.4**
 	-Our Application runs on port 3308, so follow these steps:
 		--Open XAMPP Control Panel
 		--On the MySQL row, Click Config -> my.ini
