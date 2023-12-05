@@ -1,7 +1,7 @@
 ﻿Authors: 
 Elijah Atkins, Michael Butkevicius, Wasim Mondal, Jonathan Padilla
 
-Presentation Overview: https://docs.google.com/presentation/d/16bPzXwkCddPwj9MBusU4vDVULDMgCuL5TLDygnJ30AY/edit?usp=sharing
+Presentation Overview: https://docs.google.com/presentation/d/1F_tH1WhpUDkrjWO5GSiEfgkGZu2LPFugL5eaT2DfGKY/edit?usp=sharing
 
 Note: For insert.py you **must install mysql-connector-python** (pip install mysql-connector-python)
 
