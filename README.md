@@ -1,6 +1,8 @@
 ﻿Authors: 
 Elijah Atkins, Michael Butkevicius, Wasim Mondal, Jonathan Padilla
 
+This project was created to simulate a hospital check in queue system for our Database Management Systems course at MTSU
+
 Presentation Overview: https://docs.google.com/presentation/d/1F_tH1WhpUDkrjWO5GSiEfgkGZu2LPFugL5eaT2DfGKY/edit?usp=sharing
 
 Note: For insert.py you **must install mysql-connector-python** (pip install mysql-connector-python)
